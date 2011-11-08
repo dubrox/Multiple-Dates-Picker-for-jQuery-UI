@@ -260,7 +260,7 @@
 			},
 			removeDates : function( indexes, type ) {
 				if(!type) type = 'picked';
-				if(typeof indexes == 'array')
+				if (Object.prototype.toString.call(indexes) === '[object Array]')
 					for(var i in indexes) removeDate.call(this, i, type);
 				else
 					removeDate.call(this, indexes, type);
