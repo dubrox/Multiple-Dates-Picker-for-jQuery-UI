@@ -53,20 +53,23 @@
 					onSelect : function(dateText, inst) {
 						var $this = $(this);
 						
-						var dates_picked = $this.multiDatesPicker('getDates');
-						
-						// Check for maxPicks property. If set, prevent dates_picked from exceeding it.
-						if(dates_picked.length >= mdp_arguments[0]['maxPicks']) {
-							return;
-						}
-						
 						this.multiDatesPicker.changed = true;
 						
 						if (dateText) {
 							$this.multiDatesPicker('toggleDate', dateText);
+							
+							var dates_picked_temp = $this.multiDatesPicker('getDates');
+							
+							// Check for maxPicks property. If set, prevent dates_picked from exceeding it.
+							if(dates_picked_temp.length > mdp_arguments[0]['maxPicks']) {
+								$this.multiDatesPicker('toggleDate', dateText); // undo toggle.
+								return;
+							}
+							
 							var current_date = dateConvert.call(this, dateText);
 						}
 						
+						var dates_picked = $this.multiDatesPicker('getDates');
 						var datos = this.multiDatesPicker.mode.options;
 						
 						if (dates_picked.length > 0) {
