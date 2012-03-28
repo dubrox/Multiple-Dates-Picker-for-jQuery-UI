@@ -1,12 +1,12 @@
 /*
- * MultiDatesPicker v1.5.3
+ * MultiDatesPicker v1.5.4
  * http://multidatespickr.sourceforge.net/
  * 
  * Copyright 2011, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
 (function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.5.3" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.5.4" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -182,15 +182,16 @@
 				return dateConvert.call(this, obj_date, origDateType);
 			},
 			dateConvert : function( date, desired_format, dateFormat ) {
-				if(typeof date == desired_format) return date;
+				var from_format = typeof date;
+				
+				if(from_format == desired_format) return date;
 				
 				var $this = $(this);
 				if(typeof date == 'undefined') date = new Date(0);
 				
-				if(desired_format != 'string' && desired_format != 'object')
+				if(desired_format != 'string' && desired_format != 'object' && desired_format != 'number')
 					$.error('Date format "'+ desired_format +'" not supported on jQuery.multiDatesPicker');
 				
-				var conversion = typeof date + '->' + desired_format;
 				if(!dateFormat) {
 					dateFormat = $.datepicker._defaults.dateFormat;
 					
@@ -200,13 +201,20 @@
 						dateFormat = dp_dateFormat;
 					}
 				}
-				switch(conversion) {
-					case 'object->string':
-						return $.datepicker.formatDate(dateFormat, date);
-					case 'string->object':
-						return $.datepicker.parseDate(dateFormat, date);
-					default:
-						$.error('Conversion "'+ conversion +'" not allowed on jQuery.multiDatesPicker');
+				
+				// converts to object as a neutral format
+				switch(from_format) {
+					case 'object': break;
+					case 'string': date = $.datepicker.parseDate(dateFormat, date); break;
+					case 'number': date = new Date(date); break;
+					default: $.error('Conversion from "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
+				}
+				// then converts to the desired format
+				switch(desired_format) {
+					case 'object': return date;
+					case 'string': return $.datepicker.formatDate(dateFormat, date);
+					case 'number': return date.getTime();
+					default: $.error('Conversion to "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
 				}
 				return false;
 			},
@@ -220,21 +228,25 @@
 				return false;
 			},
 			getDates : function( format, type ) {
+				if(!format) format = 'string';
 				if(!type) type = 'picked';
 				switch (format) {
 					case 'object':
 						return this.multiDatesPicker.dates[type];
-					default:
+					case 'string':
+					case 'number':
 						var o_dates = new Array();
 						for(var i in this.multiDatesPicker.dates[type])
 							o_dates.push(
 								dateConvert.call(
 									this, 
 									this.multiDatesPicker.dates[type][i], 
-									'string'
+									format
 								)
 							);
 						return o_dates;
+					
+					default: $.error('Format "'+format+'" not supported!');
 				}
 			},
 			addDates : function( dates, type ) {
@@ -250,6 +262,7 @@
 								break;
 							} // else does the same as 'string'
 						case 'string':
+						case 'number':
 							addDate.call(this, dates, type);
 							break;
 						default: 

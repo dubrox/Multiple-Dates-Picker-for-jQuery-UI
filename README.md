@@ -2,6 +2,10 @@
 Find more infos on the [official MDP page](http://multidatespickr.sf.net).
 
 # WHAT'S NEW
+## v1.5.3
+*	Fixed method 'removeDates' does not work when passing an array of indexes.
+*	Added an error when method 'addDates' receives an empty array.
+
 ## v1.5.2
 *	Fills the input field with pre selected dates on load.
 *	Deleted an exceeded comma that caused problems in IE7 and earlier.
