@@ -1,12 +1,12 @@
 /*
- * MultiDatesPicker v1.5.2
+ * MultiDatesPicker v1.5.3
  * http://multidatespickr.sourceforge.net/
  * 
  * Copyright 2011, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
 (function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.5.2" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.5.3" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -124,9 +124,7 @@
 							
 						var isDisabledDate = $this.multiDatesPicker('gotDate', date, 'disabled') !== false;
 						var allSelected = this.multiDatesPicker.mode.options.maxPicks == $this.multiDatesPicker('getDates').length;
-						var selectable_date = (isDisabledDate || (allSelected && !highlight_class))
-							? false
-							: true;
+						var selectable_date = !(isDisabledDate || (allSelected && !highlight_class));
 							
 						if(this.multiDatesPicker.originalBeforeShowDay) this.multiDatesPicker.originalBeforeShowDay.call(this, date);
 						
@@ -240,23 +238,27 @@
 				}
 			},
 			addDates : function( dates, type ) {
-				if(!type) type = 'picked';
-				switch(typeof dates) {
-					case 'object':
-					case 'array':
-						if(dates.length) {
-							for(var i in dates)
-								addDate.call(this, dates[i], type, true);
-							sortDates.call(this, type);
+				if(dates.length > 0) {
+					if(!type) type = 'picked';
+					switch(typeof dates) {
+						case 'object':
+						case 'array':
+							if(dates.length) {
+								for(var i in dates)
+									addDate.call(this, dates[i], type, true);
+								sortDates.call(this, type);
+								break;
+							} // else does the same as 'string'
+						case 'string':
+							addDate.call(this, dates, type);
 							break;
-						} // else does the same as 'string'
-					case 'string':
-						addDate.call(this, dates, type);
-						break;
-					default: 
-						$.error('Date format "'+ typeof dates +'" not allowed on jQuery.multiDatesPicker');
+						default: 
+							$.error('Date format "'+ typeof dates +'" not allowed on jQuery.multiDatesPicker');
+					}
+					$(this).datepicker('refresh');
+				} else {
+					$.error('Empty array of dates received.');
 				}
-				$(this).datepicker('refresh');
 			},
 			removeDates : function( indexes, type ) {
 				if(!type) type = 'picked';
