@@ -122,7 +122,7 @@
 							? 'ui-state-highlight'
 							: '';
 							
-						var isDisabledDate = $this.multiDatesPicker('gotDate', date, 'disabled') !== false;
+						var isDisabledDate = ($this.multiDatesPicker('gotDate', date, 'disabled') !== false) || $this.datepicker('option', 'disabled');
 						var allSelected = this.multiDatesPicker.mode.options.maxPicks == $this.multiDatesPicker('getDates').length;
 						var selectable_date = !(isDisabledDate || (allSelected && !highlight_class));
 							
