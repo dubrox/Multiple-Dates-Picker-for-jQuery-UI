@@ -160,8 +160,7 @@
 					if(options.addDisabledDates)
 						methods.addDates.call(this, options.addDisabledDates, 'disabled');
 					
-					if(options.mode)
-						methods.setMode.call(this, options.mode);
+					methods.setMode.call(this, options);
 				} else {
 					$this.datepicker();
 				}
@@ -334,43 +333,43 @@
 						break;
 				}
 			}, 
-			setMode : function( mode ) {
-				this.multiDatesPicker.mode.modeName = mode.modeName;
-				var option;
-				switch(mode.modeName) {
+			setMode : function( options ) {
+				if(options.mode) this.multiDatesPicker.mode.modeName = options.mode;
+				
+				switch(this.multiDatesPicker.mode.modeName) {
 					case 'normal':
-						for(option in mode.options)
+						for(option in options)
 							switch(option) {
 								case 'maxPicks':
 								case 'minPicks':
 								case 'pickableRange':
 								case 'pickableRangeDelay':
 								case 'adjustRangeToDisabled':
-									this.multiDatesPicker.mode.options[option] = mode.options[option];
+									this.multiDatesPicker.mode.options[option] = options[option];
 									break;
-								default: $.error('Option ' + option + ' does not exist for setMode on jQuery.multiDatesPicker');
+								//default: $.error('Option ' + option + ' ignored for mode "'.options.mode.'".');
 							}
 					break;
 					case 'daysRange':
 					case 'weeksRange':
 						var mandatory = 1;
-						for(option in mode.options)
+						for(option in options)
 							switch(option) {
 								case 'autoselectRange':
 									mandatory--;
 								case 'pickableRange':
 								case 'pickableRangeDelay':
 								case 'adjustRangeToDisabled':
-									this.multiDatesPicker.mode.options[option] = mode.options[option];
+									this.multiDatesPicker.mode.options[option] = options[option];
 									break;
-								default: $.error('Option ' + option + ' does not exist for setMode on jQuery.multiDatesPicker');
+								//default: $.error('Option ' + option + ' does not exist for setMode on jQuery.multiDatesPicker');
 							}
 						if(mandatory > 0) $.error('Some mandatory options not specified!');
 					break;
 				}
 				
-				if(mode.options.pickableRange) {
-					$(this).datepicker("option", "maxDate", mode.options.pickableRange + (mode.options.pickableRangeDelay || 0));
+				if(options.pickableRange) {
+					$(this).datepicker("option", "maxDate", options.pickableRange + (options.pickableRangeDelay || 0));
 					$(this).datepicker("option", "minDate", this.multiDatesPicker.minDate);
 				}
 				
