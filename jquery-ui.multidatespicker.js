@@ -1,12 +1,12 @@
 /*
- * MultiDatesPicker v1.5.4
+ * MultiDatesPicker v1.6.0
  * http://multidatespickr.sourceforge.net/
  * 
  * Copyright 2011, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
 (function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.5.4" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.0" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -15,9 +15,15 @@
 		var day_zero = new Date(0);
 		var mdp_events = {};
 		
-		function removeDate(index, type) {
+		function removeDate(date, type) {
 			if(!type) type = 'picked';
-			this.multiDatesPicker.dates[type].splice(index, 1);
+			date = dateConvert.call(this, date);
+			var index = this.multiDatesPicker.dates[type].indexOf(date);
+			return this.multiDatesPicker.dates[type].splice(index, 1).pop();
+		}
+		function removeIndex(index, type) {
+			if(!type) type = 'picked';
+			return this.multiDatesPicker.dates[type].splice(index, 1).pop();
 		}
 		function addDate(date, type, no_sort) {
 			if(!type) type = 'picked';
@@ -273,13 +279,31 @@
 					$.error('Empty array of dates received.');
 				}
 			},
-			removeDates : function( indexes, type ) {
+			removeDates : function( dates, type ) {
 				if(!type) type = 'picked';
-				if (Object.prototype.toString.call(indexes) === '[object Array]')
-					for(var i in indexes) removeDate.call(this, i, type);
-				else
-					removeDate.call(this, indexes, type);
+				var removed = [];
+				if (Object.prototype.toString.call(dates) === '[object Array]') {
+					for(var i in dates.sort(function(a,b){return b-a})) {
+						removed.push(removeDate.call(this, dates[i], type));
+					}
+				} else {
+					removed.push(removeDate.call(this, dates, type));
+				}
 				$(this).datepicker('refresh');
+				return removed;
+			},
+			removeIndexes : function( indexes, type ) {
+				if(!type) type = 'picked';
+				var removed = [];
+				if (Object.prototype.toString.call(indexes) === '[object Array]') {
+					for(var i in indexes.sort(function(a,b){return b-a})) {
+						removed.push(removeIndex.call(this, indexes[i], type));
+					}
+				} else {
+					removed.push(removeIndex.call(this, indexes, type));
+				}
+				$(this).datepicker('refresh');
+				return removed;
 			},
 			resetDates : function ( type ) {
 				if(!type) type = 'picked';
@@ -288,7 +312,6 @@
 			},
 			toggleDate : function( date, type ) {
 				if(!type) type = 'picked';
-				var index = methods.gotDate.call(this, date);
 				var mode = this.multiDatesPicker.mode;
 				
 				switch(mode.modeName) {
@@ -304,10 +327,10 @@
 							methods.addDates.call(this, methods.sumDays(date, i), type);
 						break;
 					default:
-						if(index === false) // adds dates
+						if(methods.gotDate.call(this, date) === false) // adds dates
 							methods.addDates.call(this, date, type);
 						else // removes dates
-							methods.removeDates.call(this, index, type);
+							methods.removeDates.call(this, date, type);
 						break;
 				}
 			}, 
@@ -357,7 +380,7 @@
 		};
 		
 		this.each(function() {
-			if (!this.multiDatesPicker) 
+			if (!this.multiDatesPicker) {
 				this.multiDatesPicker = {
 					dates: {
 						picked: [],
@@ -370,11 +393,13 @@
 						}
 					}
 				};
+			}
 			
 			if(methods[method]) {
 				var exec_result = methods[method].apply(this, Array.prototype.slice.call(mdp_arguments, 1));
 				switch(method) {
 					case 'getDates':
+					case 'removeDates':
 					case 'gotDate':
 					case 'sumDays':
 					case 'compareDates':
