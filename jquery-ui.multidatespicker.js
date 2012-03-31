@@ -1,12 +1,12 @@
 /*
- * MultiDatesPicker v1.6.0
+ * MultiDatesPicker v1.6.1
  * http://multidatespickr.sourceforge.net/
  * 
  * Copyright 2011, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
 (function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.6.0" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.1" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -133,13 +133,14 @@
 							isDisabledCalendar = $this.datepicker('option', 'disabled'),
 							isDisabledDate = $this.multiDatesPicker('gotDate', date, 'disabled') !== false,
 							areAllSelected = this.multiDatesPicker.maxPicks == this.multiDatesPicker.dates.picked.length;
-							
-						if(this.multiDatesPicker.originalBeforeShowDay)
-							this.multiDatesPicker.originalBeforeShowDay.call(this, date);
 						
-						var highlight_class = gotThisDate ? 'ui-state-highlight' : '';
+						var custom = [true, ''];
+						if(this.multiDatesPicker.originalBeforeShowDay)
+							custom = this.multiDatesPicker.originalBeforeShowDay.call(this, date);
+						
+						var highlight_class = gotThisDate ? 'ui-state-highlight' : custom[1];
 						var selectable_date = !(isDisabledCalendar || isDisabledDate || (areAllSelected && !highlight_class));
-						return [selectable_date, highlight_class];
+						return [selectable_date && custom[0], highlight_class];
 					},
 					onClose: function(dateText, inst) {
 						if(this.tagName == 'INPUT' && this.multiDatesPicker.changed) {

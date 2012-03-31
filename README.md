@@ -3,6 +3,9 @@ Find more infos on the [official MDP page](http://multidatespickr.sf.net).
 __CAUTION__: 1.6.x has changes to methods and options that are incompatible with previous versions of the same methods.
 
 # WHAT'S NEW
+## v1.6.1
+* Now 'beforeShowDay' is as transparent as it can be.
+
 ## v1.6.0
 __CAUTION__: 1.6.x has changes to methods and options that are incompatible with previous versions of the same methods.
 * Simplified 'mode' options syntax.
