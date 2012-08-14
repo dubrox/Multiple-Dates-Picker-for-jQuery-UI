@@ -121,10 +121,22 @@
 							this.multiDatesPicker.originalOnSelect.call(this, dateText, inst);
 						
 						// thanks to bibendus83 -> http://sourceforge.net/tracker/?func=detail&atid=1495384&aid=3403159&group_id=358205
-						if ($this.datepicker('option', 'altField') != undefined && $this.datepicker('option', 'altField') != "") {
-							$($this.datepicker('option', 'altField')).val(
-								$this.multiDatesPicker('getDates', 'string')
-							);
+						//if ($this.datepicker('option', 'altField') != undefined && $this.datepicker('option', 'altField') != "") {
+						//	$($this.datepicker('option', 'altField')).val(
+						//		$this.multiDatesPicker('getDates', 'string')
+						//	);
+						//}
+						
+						// aqisnotliquid below
+						var altFieldId = $this.datepicker('option', 'altField');
+						var dateString = $this.multiDatesPicker('getDates', 'string');
+						
+						if (altFieldId != undefined && altFieldId != "") {
+							if($('*').find('#'+altFieldId).is('input')) {
+								$(altFieldId).val(dateString);
+							} else {
+								$(altFieldId).empty().text(dateString);
+							}
 						}
 					},
 					beforeShowDay : function(date) {
