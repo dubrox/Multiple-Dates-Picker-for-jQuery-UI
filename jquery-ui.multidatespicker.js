@@ -102,13 +102,17 @@
 							if(this.multiDatesPicker.maxDate && (max_date > this.multiDatesPicker.maxDate))
 								max_date = this.multiDatesPicker.maxDate;
 							
-							$this
-								.datepicker("option", "minDate", min_date)
-								.datepicker("option", "maxDate", max_date);
+							// issue #23
+							if(methods.compareDates($this.datepicker("option", "minDate"), min_date) !== 0) 
+								$this.datepicker("option", "minDate", min_date)
+							if(methods.compareDates($this.datepicker("option", "maxDate"), max_date) !== 0) 
+								$this.datepicker("option", "maxDate", max_date)
 						} else {
-							$this
-								.datepicker("option", "minDate", this.multiDatesPicker.minDate)
-								.datepicker("option", "maxDate", this.multiDatesPicker.maxDate);
+							// issue #23
+							if(methods.compareDates($this.datepicker("option", "minDate"), this.multiDatesPicker.minDate) !== 0)
+								$this.datepicker("option", "minDate", this.multiDatesPicker.minDate);
+							if(methods.compareDates($this.datepicker("option", "maxDate"), this.multiDatesPicker.maxDate) !== 0)
+								$this.datepicker("option", "maxDate", this.multiDatesPicker.maxDate);
 						}
 						
 						if(this.tagName == 'INPUT') { // for inputs
