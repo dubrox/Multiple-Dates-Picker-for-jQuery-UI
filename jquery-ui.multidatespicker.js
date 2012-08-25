@@ -124,12 +124,19 @@
 						if(this.multiDatesPicker.originalOnSelect && dateText)
 							this.multiDatesPicker.originalOnSelect.call(this, dateText, inst);
 						
-						// thanks to bibendus83 -> http://sourceforge.net/tracker/?func=detail&atid=1495384&aid=3403159&group_id=358205
-						if ($this.datepicker('option', 'altField') != undefined && $this.datepicker('option', 'altField') != "") {
-							$($this.datepicker('option', 'altField')).val(
-								$this.multiDatesPicker('getDates', 'string')
-							);
+						// START aqisnotliquid
+						// Allows for the following tags to act as altField - input, textarea, p, span, div
+						var altFieldId = $this.datepicker('option', 'altField');
+						var dateString = $this.multiDatesPicker('getDates', 'string');
+						
+						if (altFieldId != undefined && altFieldId != "") {
+							if($('*').find('#'+altFieldId).is('input, textarea')) {
+								$(altFieldId).val(dateString);
+							} else {
+								$(altFieldId).empty().text(dateString);
+							}
 						}
+						// END aqisnotliquid
 					},
 					beforeShowDay : function(date) {
 						var $this = $(this),
