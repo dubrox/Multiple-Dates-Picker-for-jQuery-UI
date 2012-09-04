@@ -142,7 +142,8 @@
 							if($('*').find('#'+altFieldId).is('input, textarea')) {
 								$(altFieldId).val(dateString);
 							} else {
-								$(altFieldId).empty().text(dateString);
+								//$(altFieldId).empty().text(dateString); Original
+								$(altFieldId).text(dateString); // May not work in <IE8
 							}
 						}
 						// END aqisnotliquid
