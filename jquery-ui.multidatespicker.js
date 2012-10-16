@@ -1,5 +1,5 @@
 /*
- * MultiDatesPicker v1.6.1
+ * MultiDatesPicker v1.6.2
  * http://multidatespickr.sourceforge.net/
  * 
  * Copyright 2011, Luca Lauretta
@@ -285,11 +285,13 @@
 					case 'string':
 					case 'number':
 						var o_dates = new Array();
-						for(var i in this.multiDatesPicker.dates[type])
+						var dates = this.multiDatesPicker.dates[type];
+
+						for(var i = 0; i < dates.length; ++i)
 							o_dates.push(
 								dateConvert.call(
 									this, 
-									this.multiDatesPicker.dates[type][i], 
+									dates[i],
 									format
 								)
 							);
@@ -305,7 +307,7 @@
 						case 'object':
 						case 'array':
 							if(dates.length) {
-								for(var i in dates)
+								for (var i = 0; i < dates.length; ++i)
 									addDate.call(this, dates[i], type, true);
 								sortDates.call(this, type);
 								break;
