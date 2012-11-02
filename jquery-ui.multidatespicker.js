@@ -285,7 +285,7 @@
 					case 'string':
 					case 'number':
 						var o_dates = new Array();
-						for(var i in this.multiDatesPicker.dates[type])
+						for(var i = 0; i < this.multiDatesPicker.dates[type].length; i++)
 							o_dates.push(
 								dateConvert.call(
 									this, 
