@@ -368,6 +368,29 @@
 						for(var i = begin; i < end; i++) 
 							methods.addDates.call(this, methods.sumDays(date, i), type);
 						break;
+					case 'freeRange':
+						if(this.multiDatesPicker.dates.picked.length == 1){ // adds dates
+                            methods.addDates.call(this, date, type);
+							var begin = this.multiDatesPicker.dates.picked[0];
+                            var end = this.multiDatesPicker.dates.picked[1];
+                            if(end < begin) { // switch
+                                var tmp = end;
+                                end = begin;
+                                begin = tmp; //bookmark
+                            }
+							this.multiDatesPicker.dates[type] = [];
+                            
+                            var dates = []
+                            for(var cur = begin; cur<=end; cur = methods.sumDays(cur, 1)){
+                                dates.push(new Date(cur.getTime()));
+                            }
+                            methods.addDates.call(this, dates, type);
+                        }
+						else{ // removes dates
+							this.multiDatesPicker.dates[type] = [];
+                            methods.addDates.call(this, date, type);
+                        }
+						break;
 					default:
 						if(methods.gotDate.call(this, date) === false) // adds dates
 							methods.addDates.call(this, date, type);
