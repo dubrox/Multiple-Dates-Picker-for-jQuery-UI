@@ -369,22 +369,30 @@
 							methods.addDates.call(this, methods.sumDays(date, i), type);
 						break;
 					case 'freeRange':
-						if(this.multiDatesPicker.dates.picked.length == 1){ // adds dates
-                            methods.addDates.call(this, date, type);
+                        // select a range of dates by clicking the first and the last date in the range
+
+						if(this.multiDatesPicker.dates.picked.length == 1){
 							var begin = this.multiDatesPicker.dates.picked[0];
-                            var end = this.multiDatesPicker.dates.picked[1];
-                            if(end < begin) { // switch
+                            var end = new Date(date);
+                            if(end < begin) { //switch
                                 var tmp = end;
                                 end = begin;
-                                begin = tmp; //bookmark
+                                begin = tmp;
                             }
-							this.multiDatesPicker.dates[type] = [];
                             
-                            var dates = []
-                            for(var cur = begin; cur<=end; cur = methods.sumDays(cur, 1)){
+                            var dates = [];
+                            var broke = false;
+                            for(var cur = new Date(begin.getTime()); cur<=end; cur = methods.sumDays(cur, 1)){
+                                isDisabledDate = methods.gotDate.call(this, cur, 'disabled') !== false;
+                                if (isDisabledDate){
+                                    broke = true;
+                                    break;
+                                }
                                 dates.push(new Date(cur.getTime()));
                             }
-                            methods.addDates.call(this, dates, type);
+                            if (broke === false){
+                                this.multiDatesPicker.dates[type] = dates;
+                            }
                         }
 						else{ // removes dates
 							this.multiDatesPicker.dates[type] = [];
