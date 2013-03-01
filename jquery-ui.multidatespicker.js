@@ -139,7 +139,7 @@
 						var dateString = $this.multiDatesPicker('getDates', 'string');
 						
 						if (altFieldId != undefined && altFieldId != "") {
-							if($('*').find('#'+altFieldId).is('input, textarea')) {
+							if($('*').find(altFieldId).is('input, textarea')) {
 								$(altFieldId).val(dateString);
 							} else {
 								//$(altFieldId).empty().text(dateString); Original
