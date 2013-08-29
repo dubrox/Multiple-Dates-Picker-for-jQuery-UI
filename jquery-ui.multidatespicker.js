@@ -105,23 +105,9 @@
 								.datepicker("option", "minDate", min_date)
 								.datepicker("option", "maxDate", max_date);
 						} else if (this.multiDatesPicker.mode == 'rangeSelection' && this.multiDatesPicker.dates.picked.length > 0){
-							var isInRange = true,
-								picked = this.value,
-								range = $this.multiDatesPicker('getSelectedRange', picked);
-
-							this.multiDatesPicker.dates.picked.length = 0;
-
-							if (range && range instanceof Array) {
-								var date = $this.multiDatesPicker('dateConvert', range[0], 'object');
-								date.setDate(date.getDate()-1);
-								do {
-									if ($this.multiDatesPicker('compareDates', date, range[1]) <= -1) {
-										$this.multiDatesPicker('addDates', [date.setDate(date.getDate()+1)]);
-									} else {
-										isInRange = false;
-									}
-								} while (isInRange)
-							}
+							var range = $this.multiDatesPicker('getSelectedRange', this.value);
+							methods.selectRange.call(this, range);
+							//$this.multiDatesPicker('selectRange', range);
 						} else {
 							$this
 								.datepicker("option", "minDate", this.multiDatesPicker.minDate)
@@ -240,6 +226,22 @@
 				}
 
 				return false;
+			},
+			selectRange : function (range) {
+				var isInRange = true;
+				this.multiDatesPicker.dates.picked.length = 0;
+
+				if (range && range instanceof Array) {
+					var date = methods.dateConvert.call(this, range[0], 'object');
+					date.setDate(date.getDate()-1);
+					do {
+						if (methods.compareDates.call(this, date, range[1]) <= -1) {
+							methods.addDates.call(this, [date.setDate(date.getDate()+1)]);
+						} else {
+							isInRange = false;
+						}
+					} while (isInRange)
+				}
 			},
 			compareDates : function(date1, date2) {
 				date1 = dateConvert.call(this, date1);
