@@ -3,6 +3,9 @@ Find more infos on the [official MDP page](http://multidatespickr.sf.net).
 __CAUTION__: 1.6.x has changes to methods and options that are incompatible with previous versions of the same methods.
 
 # WHAT'S NEW
+## v1.6.2
+* Adds Selectable Ranges as a calendar mode.  Allows user specified date ranges that are selectable with a single click.
+
 ## v1.6.1
 * Now 'beforeShowDay' is as transparent as it can be.
 
