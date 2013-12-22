@@ -191,10 +191,16 @@
 				} else {
 					$this.datepicker();
 				}
+
+        var old_value = $this.val();
 				
-				$this.datepicker('option', mdp_events);
+        $this.datepicker('option', mdp_events);
+
+        if (old_value !== undefined) {
+          methods.addDates.call(this, old_value.split(','));
+        }
 				
-				if(this.tagName == 'INPUT') $this.val($this.multiDatesPicker('getDates', 'string'));
+        if(this.tagName == 'INPUT') $this.val($this.multiDatesPicker('getDates', 'string'));
 				
 				// Fixes the altField filled with defaultDate by default
 				var altFieldOption = $this.datepicker('option', 'altField');
