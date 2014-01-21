@@ -133,20 +133,12 @@
 						if(this.multiDatesPicker.originalOnSelect && dateText)
 							this.multiDatesPicker.originalOnSelect.call(this, dateText, inst);
 						
-						// START aqisnotliquid
-						// Allows for the following tags to act as altField - input, textarea, p, span, div
-						var altFieldId = $this.datepicker('option', 'altField');
-						var dateString = $this.multiDatesPicker('getDates', 'string');
-						
-						if (altFieldId != undefined && altFieldId != "") {
-							if($('*').find(altFieldId).is('input, textarea')) {
-								$(altFieldId).val(dateString);
-							} else {
-								//$(altFieldId).empty().text(dateString); Original
-								$(altFieldId).text(dateString); // May not work in <IE8
-							}
+						// thanks to bibendus83 -> http://sourceforge.net/tracker/?func=detail&atid=1495384&aid=3403159&group_id=358205
+						if ($this.datepicker('option', 'altField') != undefined && $this.datepicker('option', 'altField') != "") {
+							$($this.datepicker('option', 'altField')).val(
+								$this.multiDatesPicker('getDates', 'string')
+							);
 						}
-						// END aqisnotliquid
 					},
 					beforeShowDay : function(date) {
 						var $this = $(this),
@@ -192,7 +184,13 @@
 					$this.datepicker();
 				}
 				
+				var old_value = $this.val();
+
 				$this.datepicker('option', mdp_events);
+
+				if (old_value !== undefined && old_value.length) {
+					methods.addDates.call(this, old_value.split(','));
+				}
 				
 				if(this.tagName == 'INPUT') $this.val($this.multiDatesPicker('getDates', 'string'));
 				
@@ -256,7 +254,7 @@
 					case 'object': break;
 					case 'string': date = $.datepicker.parseDate(dateFormat, date); break;
 					case 'number': date = new Date(date); break;
-					default: $.error('Conversion from "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
+					default: $.error('Conversion from "'+ from_format +'" format not allowed on jQuery.multiDatesPicker');
 				}
 				// then converts to the desired format
 				switch(desired_format) {
@@ -284,16 +282,16 @@
 						return this.multiDatesPicker.dates[type];
 					case 'string':
 					case 'number':
-						var o_dates = new Array();
-						for(var i = 0; i < this.multiDatesPicker.dates[type].length; i++)
-							o_dates.push(
-								dateConvert.call(
-									this, 
-									this.multiDatesPicker.dates[type][i], 
-									format
-								)
+						// jbaker - fix to allow string
+						var o_dates = new Array(),
+						totalDates = this.multiDatesPicker.dates[type].length;
+						for(var i = 0; i < totalDates; i++)
+							o_dates[i] = dateConvert.call(
+								this,
+								this.multiDatesPicker.dates[type][i],
+								format
 							);
-						return o_dates;
+						return o_dates; 
 					
 					default: $.error('Format "'+format+'" not supported!');
 				}
@@ -305,8 +303,9 @@
 						case 'object':
 						case 'array':
 							if(dates.length) {
-								for(var i = 0; i < dates.length; i++)
+								for (var i = 0; i < dates.length; i++) {
 									addDate.call(this, dates[i], type, true);
+								}
 								sortDates.call(this, type);
 								break;
 							} // else does the same as 'string'
