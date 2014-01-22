@@ -18,7 +18,7 @@
 		function removeDate(date, type) {
 			if(!type) type = 'picked';
 			date = dateConvert.call(this, date);
-			for(var i in this.multiDatesPicker.dates[type])
+			for(var i = 0; i < this.multiDatesPicker.dates[type].length; i++)
 				if(!methods.compareDates(this.multiDatesPicker.dates[type][i], date))
 					return this.multiDatesPicker.dates[type].splice(i, 1).pop();
 		}
@@ -256,7 +256,7 @@
 					case 'object': break;
 					case 'string': date = $.datepicker.parseDate(dateFormat, date); break;
 					case 'number': date = new Date(date); break;
-					default: $.error('Conversion from "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
+					default: $.error('Conversion from "'+ from_format +'" format not allowed on jQuery.multiDatesPicker');
 				}
 				// then converts to the desired format
 				switch(desired_format) {
@@ -326,7 +326,7 @@
 				if(!type) type = 'picked';
 				var removed = [];
 				if (Object.prototype.toString.call(dates) === '[object Array]') {
-					for(var i in dates.sort(function(a,b){return b-a})) {
+					for(var i = 0; i < dates.sort(function(a,b){return b-a}).length; i++) {
 						removed.push(removeDate.call(this, dates[i], type));
 					}
 				} else {
@@ -339,7 +339,7 @@
 				if(!type) type = 'picked';
 				var removed = [];
 				if (Object.prototype.toString.call(indexes) === '[object Array]') {
-					for(var i in indexes.sort(function(a,b){return b-a})) {
+					for(var i = 0; i < indexes.sort(function(a,b){return b-a}); i++) {
 						removed.push(removeIndex.call(this, indexes[i], type));
 					}
 				} else {
