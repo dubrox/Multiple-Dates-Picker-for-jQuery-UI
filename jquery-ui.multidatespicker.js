@@ -127,7 +127,7 @@
 						if(this.tagName == 'INPUT') { // for inputs
 							$this.val(
 								$this.multiDatesPicker('getDates', 'string')
-							);
+							).trigger("change");
 						}
 						
 						if(this.multiDatesPicker.originalOnSelect && dateText)
