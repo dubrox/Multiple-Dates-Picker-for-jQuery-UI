@@ -139,7 +139,7 @@
 						var dateString = $this.multiDatesPicker('getDates', 'string');
 						
 						if (altFieldId != undefined && altFieldId != "") {
-							if($('*').find('#'+altFieldId).is('input, textarea')) {
+							if($('*').find(altFieldId).is('input, textarea')) {
 								$(altFieldId).val(dateString);
 							} else {
 								//$(altFieldId).empty().text(dateString); Original
@@ -285,7 +285,7 @@
 					case 'string':
 					case 'number':
 						var o_dates = new Array();
-						for(var i in this.multiDatesPicker.dates[type])
+						for(var i = 0; i < this.multiDatesPicker.dates[type].length; i++)
 							o_dates.push(
 								dateConvert.call(
 									this, 
@@ -305,7 +305,7 @@
 						case 'object':
 						case 'array':
 							if(dates.length) {
-								for(var i in dates)
+								for(var i = 0; i < dates.length; i++)
 									addDate.call(this, dates[i], type, true);
 								sortDates.call(this, type);
 								break;
