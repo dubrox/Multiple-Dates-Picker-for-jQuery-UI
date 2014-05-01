@@ -104,11 +104,13 @@
 							$this
 								.datepicker("option", "minDate", min_date)
 								.datepicker("option", "maxDate", max_date);
-						} else {
+						} 
+                        /*   COMMENTING OUT BECAUSE IT STOPS JUMPING - blindmelon
+                            else {
 							$this
 								.datepicker("option", "minDate", this.multiDatesPicker.minDate)
 								.datepicker("option", "maxDate", this.multiDatesPicker.maxDate);
-						}
+						}*/
 						/* Commenting this section out until it can be tested more
 							// issue #23
 							if(methods.compareDates($this.datepicker("option", "minDate"), min_date) !== 0) 
