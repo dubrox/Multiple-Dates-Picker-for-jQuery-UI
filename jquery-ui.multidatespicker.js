@@ -149,6 +149,19 @@
 							}
 						}
 						// END aqisnotliquid
+
+                        if ($this.datepicker('option', 'altFieldFirst') != undefined && $this.datepicker('option', 'altFieldFirst') != "") {
+                            $($this.datepicker('option', 'altFieldFirst')).val(
+                                datesString = $this.multiDatesPicker('getDates', 'string')[0]
+                            );
+                        }
+
+                        if ($this.datepicker('option', 'altFieldLast') != undefined && $this.datepicker('option', 'altFieldLast') != "") {
+                            $($this.datepicker('option', 'altFieldLast')).val(
+                                datesString = $this.multiDatesPicker('getDates', 'string').pop()
+                            );
+                        }
+
 					},
 					beforeShowDay : function(date) {
 						var $this = $(this),
@@ -375,6 +388,7 @@
 
 						if(this.multiDatesPicker.dates.picked.length == 1){
 							var begin = this.multiDatesPicker.dates.picked[0];
+                            date = dateConvert.call(this, date);
                             var end = new Date(date);
                             if(end < begin) { //switch
                                 var tmp = end;
@@ -394,6 +408,9 @@
                             }
                             if (broke === false){
                                 this.multiDatesPicker.dates[type] = dates;
+                            }
+                            else{
+                                this.multiDatesPicker.dates[type] = []; // clear on invalid select
                             }
                         }
 						else{ // removes dates
