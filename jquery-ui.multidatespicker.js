@@ -18,7 +18,7 @@
 		function removeDate(date, type) {
 			if(!type) type = 'picked';
 			date = dateConvert.call(this, date);
-			for(var i in this.multiDatesPicker.dates[type])
+			for(var i = 0; i < this.multiDatesPicker.dates[type].length; i++)
 				if(!methods.compareDates(this.multiDatesPicker.dates[type][i], date))
 					return this.multiDatesPicker.dates[type].splice(i, 1).pop();
 		}
@@ -292,7 +292,7 @@
 						case 'object':
 						case 'array':
 							if(dates.length) {
-								for(var i in dates)
+								for(var i = 0; i < dates.length; i++)
 									addDate.call(this, dates[i], type, true);
 								sortDates.call(this, type);
 								break;
