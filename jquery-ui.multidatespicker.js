@@ -1,12 +1,12 @@
 /*
- * MultiDatesPicker v1.6.2
+ * MultiDatesPicker v1.6.3
  * http://multidatespickr.sourceforge.net/
  * 
  * Copyright 2014, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
 (function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.6.2" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.3" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -72,8 +72,8 @@
 						
 						if (dateText) {
 							$this.multiDatesPicker('toggleDate', dateText);
-							
-							// continue here!!! don't know how to highlight the clicked day without regen calendar
+							this.multiDatesPicker.changed = true;
+							// @todo: this will be optimized when I'll move methods to the singleton.
 						}
 						
 						if (this.multiDatesPicker.mode == 'normal' && this.multiDatesPicker.pickableRange) {
@@ -114,21 +114,10 @@
 									.datepicker("option", "maxDate", this.multiDatesPicker.maxDate);
 							}
 						}
-						if(this.tagName == 'INPUT') { // for inputs
-							$this.val(
-								$this.multiDatesPicker('getDates', 'string')
-							);
-						}
 						
 						if(this.multiDatesPicker.originalOnSelect && dateText)
 							this.multiDatesPicker.originalOnSelect.call(this, dateText, inst);
 						
-						// thanks to bibendus83 -> http://sourceforge.net/tracker/?func=detail&atid=1495384&aid=3403159&group_id=358205
-						if ($this.datepicker('option', 'altField') != undefined && $this.datepicker('option', 'altField') != "") {
-							$($this.datepicker('option', 'altField')).val(
-								$this.multiDatesPicker('getDates', 'string')
-							);
-						}
 					},
 					beforeShowDay : function(date) {
 						var $this = $(this),
@@ -149,7 +138,7 @@
 				
 				// value have to be extracted before datepicker is initiated
 				if($this.val()) var inputDates = $this.val()
-				this.multiDatesPicker.separator = ',';
+				this.multiDatesPicker.separator = ', ';
 				
 				if(options) {
 					// value have to be extracted before datepicker is initiated
@@ -180,12 +169,18 @@
 				// adds any dates found in the input or alt field
 				if(inputDates) methods.addDates.call(this, inputDates.split(this.multiDatesPicker.separator));
 				
+				// generates the new string of added dates
+				var inputs_values = $this.multiDatesPicker('getDates', 'string').join(this.multiDatesPicker.separator);
+				
 				// fills the input field back with all the dates in the calendar
-				if(this.tagName == 'INPUT')	$this.val($this.multiDatesPicker('getDates', 'string').join(this.multiDatesPicker.separator));
+				if(this.tagName == 'INPUT')	$this.val(inputs_values);
 				
 				// Fixes the altField filled with defaultDate by default
 				var altFieldOption = $this.datepicker('option', 'altField');
-				if (altFieldOption) $(altFieldOption).val($this.multiDatesPicker('getDates', 'string'));
+				if (altFieldOption) $(altFieldOption).val(inputs_values);
+				
+				// Updates the calendar view
+				$this.datepicker('refresh');
 			},
 			compareDates : function(date1, date2) {
 				date1 = dateConvert.call(this, date1);
@@ -319,7 +314,6 @@
 				} else {
 					removed.push(removeDate.call(this, dates, type));
 				}
-				//$(this).datepicker('refresh');
 				return removed;
 			},
 			removeIndexes : function( indexes, type ) {
@@ -332,13 +326,11 @@
 				} else {
 					removed.push(removeIndex.call(this, indexes, type));
 				}
-				//$(this).datepicker('refresh');
 				return removed;
 			},
 			resetDates : function ( type ) {
 				if(!type) type = 'picked';
 				this.multiDatesPicker.dates[type] = [];
-				//$(this).datepicker('refresh');
 			},
 			toggleDate : function( date, type ) {
 				if(!type) type = 'picked';
@@ -406,7 +398,6 @@
 				
 				if(mdp_events.onSelect)
 					mdp_events.onSelect();
-				//$this.datepicker('refresh');
 			},
 			destroy: function(){
 				this.multiDatesPicker = null;
@@ -415,6 +406,7 @@
 		};
 		
 		this.each(function() {
+			var $this = $(this);
 			if (!this.multiDatesPicker) {
 				this.multiDatesPicker = {
 					dates: {
@@ -434,6 +426,15 @@
 					case 'resetDates':
 					case 'toggleDate':
 					case 'addDates':
+						var altField = $this.datepicker('option', 'altField');
+						var dates_string = methods.getDates.call(this, 'string');
+						if (altField !== undefined && altField != "") {
+							$(altField).val(dates_string);
+						}
+						if(this.tagName == 'INPUT') { // for inputs
+							$this.val(dates_string);
+						}
+						
 						$.datepicker._refreshDatepicker(this);
 				}
 				switch(method) {
