@@ -407,6 +407,10 @@
 				if(mdp_events.onSelect)
 					mdp_events.onSelect();
 				//$this.datepicker('refresh');
+			},
+			destroy: function(){
+				this.multiDatesPicker = null;
+				$(this).datepicker('destroy');
 			}
 		};
 		
@@ -425,8 +429,16 @@
 			if(methods[method]) {
 				var exec_result = methods[method].apply(this, Array.prototype.slice.call(mdp_arguments, 1));
 				switch(method) {
-					case 'getDates':
 					case 'removeDates':
+					case 'removeIndexes':
+					case 'resetDates':
+					case 'toggleDate':
+					case 'addDates':
+						$.datepicker._refreshDatepicker(this);
+				}
+				switch(method) {
+					case 'removeDates':
+					case 'getDates':
 					case 'gotDate':
 					case 'sumDays':
 					case 'compareDates':
