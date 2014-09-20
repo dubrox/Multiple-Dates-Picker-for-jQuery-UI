@@ -135,7 +135,7 @@
 							gotThisDate = $this.multiDatesPicker('gotDate', date) !== false,
 							isDisabledCalendar = $this.datepicker('option', 'disabled'),
 							isDisabledDate = $this.multiDatesPicker('gotDate', date, 'disabled') !== false,
-							areAllSelected = this.multiDatesPicker.maxPicks == this.multiDatesPicker.dates.picked.length;
+							areAllSelected = this.multiDatesPicker.maxPicks <= this.multiDatesPicker.dates.picked.length;
 						
 						var custom = [true, '', null];
 						if(this.multiDatesPicker.originalBeforeShowDay)
