@@ -167,10 +167,10 @@
 				$this.datepicker('option', mdp_events);
 				
 				// adds any dates found in the input or alt field
-				if(inputDates) methods.addDates.call(this, inputDates.split(this.multiDatesPicker.separator));
+				if(inputDates) $this.multiDatesPicker('value', inputDates);
 				
 				// generates the new string of added dates
-				var inputs_values = $this.multiDatesPicker('getDates', 'string').join(this.multiDatesPicker.separator);
+				var inputs_values = $this.multiDatesPicker('value');
 				
 				// fills the input field back with all the dates in the calendar
 				if(this.tagName == 'INPUT')	$this.val(inputs_values);
@@ -257,6 +257,13 @@
 					}
 				}
 				return false;
+			},
+			value : function( value ) {
+				if(value) {
+					methods.addDates.call(this, value.split(this.multiDatesPicker.separator));
+				} else {
+					return methods.getDates.call(this, 'string').join(this.multiDatesPicker.separator);
+				}
 			},
 			getDates : function( format, type ) {
 				if(!format) format = 'string';
@@ -427,7 +434,7 @@
 					case 'toggleDate':
 					case 'addDates':
 						var altField = $this.datepicker('option', 'altField');
-						var dates_string = methods.getDates.call(this, 'string');
+						var dates_string = methods.value.call(this);
 						if (altField !== undefined && altField != "") {
 							$(altField).val(dates_string);
 						}
