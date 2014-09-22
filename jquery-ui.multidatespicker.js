@@ -126,13 +126,13 @@
 							isDisabledDate = $this.multiDatesPicker('gotDate', date, 'disabled') !== false,
 							areAllSelected = this.multiDatesPicker.maxPicks <= this.multiDatesPicker.dates.picked.length;
 						
-						var custom = [true, '', null];
+						var bsdReturn = [true, '', null];
 						if(this.multiDatesPicker.originalBeforeShowDay)
-							custom = this.multiDatesPicker.originalBeforeShowDay.call(this, date);
+							bsdReturn = this.multiDatesPicker.originalBeforeShowDay.call(this, date);
 						
-						var highlight_class = gotThisDate ? 'ui-state-highlight' : custom[1];
-						var selectable_date = !(isDisabledCalendar || isDisabledDate || (areAllSelected && !highlight_class));
-						return [selectable_date && custom[0], highlight_class, custom[2]];
+						bsdReturn[1] = gotThisDate ? 'ui-state-highlight' : bsdReturn[1];
+						bsdReturn[0] = bsdReturn[0] && !(isDisabledCalendar || isDisabledDate || (areAllSelected && !bsdReturn[1]));
+						return bsdReturn;
 					}
 				};
 				
@@ -142,7 +142,7 @@
 				
 				if(options) {
 					// value have to be extracted before datepicker is initiated
-					if(options.altField) var inputDates = $(options.altField).val();
+					//if(options.altField) var inputDates = $(options.altField).val();
 					if(options.separator) this.multiDatesPicker.separator = options.separator;
 					
 					this.multiDatesPicker.originalBeforeShow = options.beforeShow;
@@ -259,10 +259,13 @@
 				return false;
 			},
 			value : function( value ) {
-				if(value) {
+				if(value && typeof value == 'string') {
 					methods.addDates.call(this, value.split(this.multiDatesPicker.separator));
 				} else {
-					return methods.getDates.call(this, 'string').join(this.multiDatesPicker.separator);
+					var dates = methods.getDates.call(this, 'string');
+					return dates.length
+						? dates.join(this.multiDatesPicker.separator)
+						: "";
 				}
 			},
 			getDates : function( format, type ) {
@@ -434,6 +437,7 @@
 					case 'toggleDate':
 					case 'addDates':
 						var altField = $this.datepicker('option', 'altField');
+						// @todo: should use altFormat for altField
 						var dates_string = methods.value.call(this);
 						if (altField !== undefined && altField != "") {
 							$(altField).val(dates_string);
@@ -451,6 +455,7 @@
 					case 'sumDays':
 					case 'compareDates':
 					case 'dateConvert':
+					case 'value':
 						ret = exec_result;
 				}
 				return exec_result;
