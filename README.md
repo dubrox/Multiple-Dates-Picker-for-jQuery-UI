@@ -3,6 +3,13 @@ Find more infos on the [official MDP page](http://multidatespickr.sf.net).
 __CAUTION__: 1.6.x has changes to methods and options that are incompatible with previous versions of the same methods.
 
 # WHAT'S NEW
+## v1.6.3
+* Added "destroy" method.
+* Added method "value" that returns the string value that would be used in input elements.
+* Refreshing calendar if dates are modified using MDP methods.
+* Fixed the link within altField, input field and their initial html value attribute.
+* Minor changes.
+
 ## v1.6.2
 * Bug fixes
 
