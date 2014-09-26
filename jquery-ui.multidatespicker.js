@@ -138,12 +138,12 @@
 				
 				// value have to be extracted before datepicker is initiated
 				if($this.val()) var inputDates = $this.val()
-				this.multiDatesPicker.separator = ', ';
 				
 				if(options) {
 					// value have to be extracted before datepicker is initiated
 					//if(options.altField) var inputDates = $(options.altField).val();
 					if(options.separator) this.multiDatesPicker.separator = options.separator;
+					if(!this.multiDatesPicker.separator) this.multiDatesPicker.separator = ', ';
 					
 					this.multiDatesPicker.originalBeforeShow = options.beforeShow;
 					this.multiDatesPicker.originalOnSelect = options.onSelect;
@@ -173,7 +173,7 @@
 				var inputs_values = $this.multiDatesPicker('value');
 				
 				// fills the input field back with all the dates in the calendar
-				if(this.tagName == 'INPUT')	$this.val(inputs_values);
+				$this.val(inputs_values);
 				
 				// Fixes the altField filled with defaultDate by default
 				var altFieldOption = $this.datepicker('option', 'altField');
