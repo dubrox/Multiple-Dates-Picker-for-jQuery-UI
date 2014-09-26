@@ -355,7 +355,7 @@
 							begin = this.multiDatesPicker.autoselectRange[1];
 						}
 						for(var i = begin; i < end; i++) 
-							methods.addDates.call(this, methods.sumDays.call(date, i), type);
+							methods.addDates.call(this, methods.sumDays.call(this,date, i), type);
 						break;
 					default:
 						if(methods.gotDate.call(this, date) === false) // adds dates
