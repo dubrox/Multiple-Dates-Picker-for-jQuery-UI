@@ -1,12 +1,12 @@
 /*
- * MultiDatesPicker v1.6.3
+ * MultiDatesPicker v1.6.4
  * http://multidatespickr.sourceforge.net/
  * 
  * Copyright 2014, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
 (function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.6.3" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.4" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -130,7 +130,7 @@
 						if(this.multiDatesPicker.originalBeforeShowDay)
 							bsdReturn = this.multiDatesPicker.originalBeforeShowDay.call(this, date);
 						
-						bsdReturn[1] = gotThisDate ? 'ui-state-highlight' : bsdReturn[1];
+						bsdReturn[1] = gotThisDate ? 'ui-state-highlight '+bsdReturn[1] : bsdReturn[1];
 						bsdReturn[0] = bsdReturn[0] && !(isDisabledCalendar || isDisabledDate || (areAllSelected && !bsdReturn[1]));
 						return bsdReturn;
 					}
@@ -204,6 +204,7 @@
 			},
 			dateConvert : function( date, desired_format, dateFormat ) {
 				var from_format = typeof date;
+				var $this = $(this);
 				
 				if(from_format == desired_format) {
 					if(from_format == 'object') {
@@ -217,19 +218,18 @@
 					return date;
 				}
 				
-				var $this = $(this);
 				if(typeof date == 'undefined') date = new Date(0);
 				
 				if(desired_format != 'string' && desired_format != 'object' && desired_format != 'number')
 					$.error('Date format "'+ desired_format +'" not supported!');
 				
 				if(!dateFormat) {
-					dateFormat = $.datepicker._defaults.dateFormat;
-					
 					// thanks to bibendus83 -> http://sourceforge.net/tracker/index.php?func=detail&aid=3213174&group_id=358205&atid=1495382
 					var dp_dateFormat = $this.datepicker('option', 'dateFormat');
 					if (dp_dateFormat) {
 						dateFormat = dp_dateFormat;
+					} else {
+						dateFormat = $.datepicker._defaults.dateFormat;
 					}
 				}
 				
@@ -355,7 +355,7 @@
 							begin = this.multiDatesPicker.autoselectRange[1];
 						}
 						for(var i = begin; i < end; i++) 
-							methods.addDates.call(this, methods.sumDays(date, i), type);
+							methods.addDates.call(this, methods.sumDays.call(date, i), type);
 						break;
 					default:
 						if(methods.gotDate.call(this, date) === false) // adds dates
