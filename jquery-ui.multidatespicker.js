@@ -442,9 +442,7 @@
 						if (altField !== undefined && altField != "") {
 							$(altField).val(dates_string);
 						}
-						if(this.tagName == 'INPUT') { // for inputs
-							$this.val(dates_string);
-						}
+						$this.val(dates_string);
 						
 						$.datepicker._refreshDatepicker(this);
 				}

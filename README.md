@@ -3,6 +3,11 @@ Find more infos on the [official MDP page](http://multidatespickr.sf.net).
 __CAUTION__: 1.6.x has changes to methods and options that are incompatible with previous versions of the same methods.
 
 # WHAT'S NEW
+## v1.6.4
+* Fix in maintaining custom dateFormat in toggleDate method.
+* Fixed respecting beforeShowDay custom classes.
+* Minor fixes.
+
 ## v1.6.3
 * Added "destroy" method.
 * Added method "value" that returns the string value that would be used in input elements.
