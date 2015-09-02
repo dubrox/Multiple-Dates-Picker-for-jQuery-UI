@@ -277,14 +277,18 @@
 					case 'string':
 					case 'number':
 						var o_dates = new Array();
-						for(var i in this.multiDatesPicker.dates[type])
+						for(var i in this.multiDatesPicker.dates[type]) {
+							var current = this.multiDatesPicker.dates[type][i];
+
+							if (current.hasOwnProperty(i))
 							o_dates.push(
 								dateConvert.call(
-									this, 
-									this.multiDatesPicker.dates[type][i], 
+									this,
+									current,
 									format
 								)
 							);
+						}
 						return o_dates;
 					
 					default: $.error('Format "'+format+'" not supported!');
