@@ -278,16 +278,16 @@
 					case 'number':
 						var o_dates = new Array();
 						for(var i in this.multiDatesPicker.dates[type]) {
-			              var current = this.multiDatesPicker.dates[type][i];
+							var current = this.multiDatesPicker.dates[type][i];
 
-			              if (current.hasOwnProperty(i))
-			                o_dates.push(
-			                  dateConvert.call(
-			                    this,
-			                    current,
-			                    format
-			                  )
-			                );
+							if (current.hasOwnProperty(i))
+							o_dates.push(
+								dateConvert.call(
+									this,
+									current,
+									format
+								)
+							);
 						}
 						return o_dates;
 					
