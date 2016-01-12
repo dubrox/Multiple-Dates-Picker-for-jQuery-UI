@@ -1,0 +1,16 @@
+{
+  "name": "ph-multi-date-picker-for-jquery-ui",
+  "version": "0.0.1",
+  "homepage": "https://github.com/payrollhero/Multiple-Dates-Picker-for-jQuery-UI",
+  "description": "PayrollHero's fork of https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI",
+  "authors": [
+    "nsuria <nsuria@payrollhero.com>"
+  ],
+  "main": "dist/jquery-ui.multidatespicker.js",
+  "keywords": [
+    "payrollhero",
+    "multi",
+    "datepicker"
+  ],
+  "license": ["MIT", "GPL"]
+}
