@@ -371,7 +371,7 @@
 				
 				switch(this.multiDatesPicker.mode) {
 					case 'normal':
-						for(option in options)
+						for(var option in options)
 							switch(option) {
 								case 'maxPicks':
 								case 'minPicks':
