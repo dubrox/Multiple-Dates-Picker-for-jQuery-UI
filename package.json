@@ -1,0 +1,23 @@
+{
+  "name": "jquery-ui-multi-date-picker",
+  "version": "1.6.5",
+  "description": "MDP is a little plugin that enables jQuery UI calendar to manage multiple dates.",
+  "main": "dist/jquery-ui.multidatespicker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI.git"
+  },
+  "author": "Luca Lauretta <dubrox@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/issues"
+  },
+  "homepage": "http://multidatespickr.sourceforge.net",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "jquery-ui-dist": "^1.12.1"
+  }
+}
