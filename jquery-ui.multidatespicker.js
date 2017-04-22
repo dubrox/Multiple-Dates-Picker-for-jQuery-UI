@@ -278,13 +278,15 @@
 					case 'number':
 						var o_dates = new Array();
 						for(var i in this.multiDatesPicker.dates[type])
-							o_dates.push(
-								dateConvert.call(
-									this, 
-									this.multiDatesPicker.dates[type][i], 
-									format
-								)
-							);
+							if (this.multiDatesPicker.dates[type].hasOwnProperty(i)) {
+								o_dates.push(
+									dateConvert.call(
+										this, 
+										this.multiDatesPicker.dates[type][i], 
+										format
+									)
+								);
+							}
 						return o_dates;
 					
 					default: $.error('Format "'+format+'" not supported!');
