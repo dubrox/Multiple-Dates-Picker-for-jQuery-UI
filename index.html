@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/png" href="mdp-icon.png">
+        <!--[if IE]><link rel="shortcut icon" href="favicon.ico" /><![endif]-->
+		<title>MultiDatesPicker for jQuery UI</title>
+		<meta name="description" content="MDP is a little plugin that enables jQuery UI calendar to manage multiple dates.">
+		<meta name="keywords" content="Multiple Dates Picker, jQuery, jQuery UI, javascript, calendar, Luca Lauretta, dubrox">
+		<meta name="author" content="Luca Lauretta aka dubrox">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                // Documentation
+                $('i:contains(type)').attr('title', '[Optional] accepted values are: "allowed" [default]; "disabled".');
+                $('i:contains(format)').attr('title', '[Optional] accepted values are: "string" [default]; "object".');
+                $('#how-to').find('h4').each(function () {
+                    var $this = $(this);
+                    $this.wrap('<a href="#'+ $this.closest('li').attr('id') +'" />');
+                });
+                $('#demos').find('.demo').each(function () {
+                    var $this = $(this);
+                    $this.find('h3').wrapInner('<a href="#'+ $this.attr('id') +'" />');
+                });
+            });
+        </script>
+        <style>
+            h2 {
+                margin-top: 2em;
+            }
+        </style>
+
+    </head>
+	<body>
+		<div id="page" class="container">
+			<div class="jumbotron">
+			    <h1 id="mdp-title" class="display-3">MultiDatesPicker for jQuery UI</h1>
+			    <p class="lead">
+				    MDP is a little plugin that enables jQuery UI calendar to manage multiple dates with the following features:
+			    </p>
+			    <ul>
+				    <li>Select date ranges.</li>
+				    <li>Pick multiple dates not in secuence.</li>
+				    <li>Define a maximum number of pickable dates.</li>
+                    <li>Define a range <code>X</code> days from where it is possible to select <code>Y</code> dates.</li>
+				    <li>Define unavailable dates.</li>
+			    </ul>
+
+                <div id="share">
+                    <a class="github-button" href="https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI" data-style="mega" data-count-href="/dubrox/Multiple-Dates-Picker-for-jQuery-UI/stargazers" data-count-api="/repos/dubrox/Multiple-Dates-Picker-for-jQuery-UI#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star dubrox/Multiple-Dates-Picker-for-jQuery-UI on GitHub">Star</a>
+
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" data-url="http://multidatespickr.sourceforge.net/" data-text="MultiDatesPicker for jQuery UI">Tweet</a>
+                    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                </div>
+			</div>
+
+            <div class="row">
+                <div id="download" class="col-md-6">
+                    <h2>Download</h2>
+                    <p>
+                        Download from <a href="https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/archive/master.zip">GitHub</a>.
+                    </p>
+                </div>
+
+                <div id="report" class="col-md-6">
+                    <h2>Bugs or features request?</h2>
+                    <p>Please use the issue tracker on <a href="https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/issues">GitHub Issues</a></p>
+                </div>
+            </div>
+
+			<div id="how-to">
+				<h2>How to use it</h2>
+				<p>
+					Being an extension to jQuery UI DatePicker you need to include both jQuery and jQuery UI (with datepicker module included!) javascript files to your HTML page, and right after that, include MultiDatesPicker.
+				</p>
+				<p>
+					To apply it to an element, do it the same way as you would do with jQuery UI datepicker, but write multiDatesPicker instead of datepicker:
+					<br>
+					<code class="prettyprint">$(selector).multiDatesPicker(options_for_datepicker_and_mdp);</code>
+				</p>
+				
+				<h3>MultiDatesPicker specific options</h3>
+				<ul class="list-unstyled row">
+					<li id="option-addDates" class="col-md-6">
+						<h4>addDates</h4>
+						<p>
+							Adds an array of dates specified in a string, milliseconds or javascript date object format.
+							<br>
+							<em>NOTE: the string format you should pass to multiDatePicker depends on the localization of datepicker, see this page for more infos on how to configure it.</em>
+						</p>
+					</li>
+					<li id="option-addDisabledDates" class="col-md-6">
+						<h4>addDisabledDates</h4>
+						<p>
+							Disables an array of dates specified in a string, milliseconds or javascript date object format.
+							<br>
+							<em>NOTE: the string format you should pass to multiDatePicker depends on the localization of datepicker, see this page for more infos on how to configure it.</em>
+						</p>
+					</li>
+					<li id="option-separator" class="col-md-6">
+						<h4>separator</h4>
+						<p>
+							Allows to specify a custom separator for the string representation of the dates selected (defaults ", ").
+						</p>
+					</li>
+					<li id="option-mode" class="col-md-6">
+						<h4>mode</h4>
+						<p>
+							Allows to enable a different MDP modes: 'normal' (default) or 'daysRange'.
+						</p>
+						<h4>normal mode options</h4>
+						<ul>
+							<li id="option-maxPicks">
+								<h4>maxPicks</h4>
+								<p>
+									Number of dates allowed to be selected
+                                    (<a href="#demo-max-picks">see demo</a>).
+								</p>
+							</li>
+							<li id="option-pickableRange">
+								<h4>pickableRange</h4>
+								<p>
+									Limits the range of dates available for selection to a certain
+                                    number of days from the first selection
+                                    (<a href="#demo-pickable-range">see demo</a>).
+								</p>
+							</li>
+							<li id="option-adjustRangeToDisabled">
+								<h4>adjustRangeToDisabled</h4>
+								<p>
+									A boolean that allows to maintain the number of pickable days
+                                    even in case there are disabled days within the range
+                                    specified in 'pickableRange'.<br>
+									See the <a href="#demo-pickable-range">corresponding demo</a>
+                                    and try toggling this flag to see the results.
+								</p>
+							</li>
+						</ul>
+						<h4>daysRange mode options</h4>
+						<ul>
+							<li id="option-autoselectRange">
+								<h4>autoselectRange</h4>
+								<p>
+									Array of two integers: the first sets the beginning of the range relative to the date clicked on;
+                                    the last sets the end of the range. Both numbers may be negative
+                                    (<a href="#demo-days-range">see demo</a>).
+								</p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				
+				<h3>Available methods:</h3>
+				<ul class="list-unstyled row">
+					<li id="method-compareDates" class="col-md-6">
+						<h4>compareDates( date1, date2 )</h4>
+						<p>
+							Compares two dates returning 1, 0 or -1 if date2 is greater, equal or smaller than date1 respectively.
+						</p>
+					</li>
+					<li id="method-gotDate" class="col-md-6">
+						<h4>gotDate( date, <i>type</i> )</h4>
+						<p>
+							Returns the index of the date in the dates array, or false in case that date is not found.
+							<br>
+							The parameter dates can be a string or a date object.
+						</p>
+						<p>Example: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('gotDate', new Date());</code></p>
+					</li>
+					<li id="method-addDates" class="col-md-6">
+						<h4>addDates( dates, <i>type</i> )</h4>
+						<p>
+							Adds one or more dates to the calendar. 
+							<br>
+							The parameter dates can be a string, a date object or an array (of strings or javascript date objects).
+						</p>
+						<p>Example adding today: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('addDates', new Date());</code></p>
+					</li>
+					<li id="method-removeIndexes" class="col-md-6">
+						<h4>removeIndexes( indexes, <i>type</i> )</h4>
+						<p>
+							Removes one or more dates from the dates array using their indexes.
+							<br>
+							The parameter indexes can be an integer or an array of integers.
+						</p>
+						<p>Example removing first date: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('removeIndexes', 0);</code></p>
+					</li>
+					<li id="method-removeDates" class="col-md-6">
+						<h4>removeDates( dates, <i>type</i> )</h4>
+						<p>
+							Removes one or more dates from the dates array using their dates.
+							<br>
+							The parameter dates can be a single value or an array of milliseconds, strings or date object.
+						</p>
+						<p>Example removing today date: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('removeDates', new Date());</code></p>
+					</li>
+					<li id="method-resetDates" class="col-md-6">
+						<h4>resetDates( <i>type</i> )</h4>
+						<p>
+							Removes all dates.
+							<br>
+							The array of dates to reset can be of <i>type</i> 'picked' (default) or 'disabled'.
+						</p>
+						<p>Example resetting disabled dates: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('resetDates', 'disabled');</code></p>
+					</li>
+					<li id="method-toggleDate" class="col-md-6">
+						<h4>toggleDate( date, <i>type</i> )</h4>
+						<p>
+							Adds/removes a single date from the calendar.
+							<br>
+							The date can be passed as string or as javascript date object.
+						</p>
+						<p>Example toggling today: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('toggleDate', new Date());</code></p>
+					</li>
+					<li id="method-getDates" class="col-md-6">
+						<h4>getDates( <i>format</i>, <i>type</i> )</h4>
+						<p>
+							Retrives the array of dates associated with the multiDatesPicker in the specified format: "string" (default) for localized string format, or "object" for javascript date object format.
+						</p>
+						<p>Example: <code class="prettyprint">var dates = $('#simpliest-usage').multiDatesPicker('getDates');</code></p>
+					</li>
+					<li id="method-value" class="col-md-6">
+						<h4>value( <i>string</i> )</h4>
+						<p>
+							If no parameter is passed, returns the string value that would be used in input elements. Otherwise parses the string for dates to add.
+						</p>
+						<p>Get Example: <code class="prettyprint">var dates = $('#simpliest-usage').multiDatesPicker('value');</code></p>
+						<p>Set Example: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('value', '2/19/1985, 11/14/2009');</code></p>
+					</li>
+					<li id="method-destroy" class="col-md-6">
+						<h4>destroy()</h4>
+						<p>
+							Destroys the MDP and Datepicker instances on the element.
+						</p>
+						<p>Example: <code class="prettyprint">$('#simpliest-usage').multiDatesPicker('destroy');</code></p>
+					</li>
+				</ul>
+			</div>
+			
+			<div id="use_cases">
+				<h2>Use cases</h2>
+				<p>
+					You can find MDP implemented in the following sites:
+				</p>
+				<ul>
+					<li>
+						<a href="http://avisooportunoexpress.mx">avisooportunoexpress.mx</a>
+						<br>
+						A Mexican website developed by me, aimed to sell advertisements on 
+						<a href="http://www.eluniversal.com.mx">El Universal CPN</a> 
+						mexican newspaper products. 
+					</li>
+				</ul>
+				<p>
+					If you're using MDP in your site and would like to share it, simply <a href="#contactme">contact me</a>. You'd get free ad from here and we get more examples of implementation from you :)
+				</p>
+			</div>
+			
+			<div id="demos">
+				<h2>Demos</h2>
+				<p>
+					Here are some demos for you to understand how it works and what you can obtain with it.<br>
+					To see how it is implemented simply check the source code of this page: I've tried to keep the code simple and clear :)
+				</p>
+				<ul id="demos-list" class="list-unstyled row">
+					<li id="demo-simple" class="demo col-md-4">
+						<h3>Simplest usage</h3>
+                        <script async src="//jsfiddle.net/atn8upt5/1/embed/js,result/"></script>
+                        <p class="description">
+                            Just apply the plugin to an HTML element and you're ready to select multiple dates :)
+                        </p>
+					</li>
+
+					<li id="demo-custom-format" class="demo col-md-4">
+						<h3>Custom date format</h3>
+                        <script async src="//jsfiddle.net/wavpjp9r/1/embed/js,result/"></script>
+                        <p class="description">
+                            Same as previous example, but using custom date formats and custom default day.
+                        </p>
+					</li>
+
+					<li id="demo-pre-select-dates" class="demo col-md-4">
+						<h3>Pre-select dates</h3>
+                        <script async src="//jsfiddle.net/7613s2hu/2/embed/js,result/"></script>
+                        <p class="description">
+                            The name says it all: you can preselect some dates specifying them in an array.<br>
+                            Dates in the array can be a mix of object date and string dates.
+                        </p>
+					</li>
+
+					<li id="demo-disable-dates" class="demo col-md-4">
+						<h3>Disable dates</h3>
+                        <script async src="//jsfiddle.net/a7zzz4fo/1/embed/js,result/"></script>
+						<p class="description">
+							Again, the name says it all: you can specify some dates to disable.<br>
+							Dates in the array can be a mix of object date and string dates.
+						</p>
+					</li>
+
+					<li id="demo-disable-calendar" class="demo col-md-4">
+						<h3>Disable calendar</h3>
+                        <script async src="//jsfiddle.net/r8d6u54u/1/embed/js,result/"></script>
+						<p class="description">
+							Disable a calendar picking functionality.
+						</p>
+					</li>
+
+					<li id="demo-alt-field" class="demo col-md-4">
+						<h3>Using altField</h3>
+                        <script async src="//jsfiddle.net/jm3cpdfc/3/embed/js,result,html/"></script>
+						<p class="description">
+							A way to have a calendar always displayed and a field that fills with
+                            selected dates.
+						</p>
+					</li>
+
+					<li id="demo-max-picks" class="demo col-md-4">
+						<h3>Set maximum picks</h3>
+                        <script async src="//jsfiddle.net/obgm1r77/1/embed/js,result/"></script>
+						<p class="description">
+							Set the maximum number of dates that can be picked.
+						</p>
+					</li>
+
+					<li id="demo-pickable-range" class="demo col-md-4">
+						<h3>Use pickableRange and adjustRangeToDisabled</h3>
+                        <script async src="//jsfiddle.net/w4b28txo/1/embed/js,result/"></script>
+						<p class="description">
+							Define a range of dates to be allowed after the first date have been picked.<br>
+							Some dates have been disabled to show up how <a href="#option-adjustRangeToDisabled">adjustRangeToDisabled</a> works.
+						</p>
+					</li>
+
+					<li id="demo-days-range" class="demo col-md-4">
+						<h3>Days range</h3>
+                        <script async src="//jsfiddle.net/t6y8bucx/1/embed/js,result/"></script>
+						<p class="description">
+							This way you can automatically select a range of days with respect to the day clicked.
+						</p>
+						<p class="example">
+							In this example the day range is set to [0, 5], which means from the day clicked to 5 days in advance.<br>
+							You can also specify other combinations like:
+						</p>
+						<ul>
+							<li>[-1,2] from a day before to two days after the clicked day</li>
+							<li>[1,3] from the day after to three days after the clicked day</li>
+							<li>...</li>
+						</ul>
+					</li>
+
+					<li id="demo-min-max" class="demo col-md-4">
+						<h3>Min and Max date</h3>
+                        <script async src="//jsfiddle.net/7xqo8uuu/2/embed/js,result/"></script>
+                        <p class="description">
+							As with the jQuery Datespicker, you can define a minimum and maximum date from where to pick dates.<br>
+							The values are relative to the current date.
+						</p>
+					</li>
+
+					<li id="demo-input" class="demo col-md-4">
+						<h3>From input</h3>
+                        <script async src="//jsfiddle.net/xbk3bwd1/2/embed/html,js,result/"></script>
+						<p class="description">
+							Just an example of how it would work with an input text field.
+						</p>
+					</li>
+
+                    <li id="demo-ui-calendar-methods" class="demo col-md-4">
+                        <h3>UI Calendar methods</h3>
+                        <script async src="//jsfiddle.net/7n6u1zpn/1/embed/js,result/"></script>
+                        <p class="description">
+                            Define <code>beforeShow</code>, <code>beforeShowDay</code><a class="reference-to" href="#custom-methods-reference">*</a>,
+                            <code>onSelect</code> and <code>onClose</code> to apply custom behaviours.
+                        </p>
+                        <p class="alert alert-info" id="custom-methods-reference">
+                            <span class="reference-to">*</span> Being that MDP needs <code>beforeShowDay</code> to change
+                            the way jQuery datepicker behaves, there may be cases in which your custom definition in MDP
+                            won't produce the same effects as if you were using it with datepicker alone.
+                        </p>
+                    </li>
+				
+					<li id="demo-full-year" class="demo col-md-12">
+						<h3>Full year</h3>
+                        <script async src="//jsfiddle.net/j207ubjw/2/embed/js,html,css,result/"></script>
+						<p class="description">
+							Just an example of how it would look to show the full year.
+						</p>
+					</li>
+					
+				</ul>
+			</div>
+			
+			<div id="tips">
+				<h2>Tips</h2>
+                <p>
+                    MDP comes with a small CSS file that applies the following styles:
+                </p>
+                <script src="http://gist-it.appspot.com/https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/blob/master/jquery-ui.multidatespicker.css"></script>
+				<p>
+					To even further customize the way the calendar looks, just modify the jQuery UI's theme you're using.<br>
+					Multiple Dates Picker is about adding functionality not style :)
+				</p>
+			</div>
+			
+			<div id="to-do">
+				<h2>Things pending</h2>
+				<p>Apart from some features and bug fixes, there is need for a better documentation and a unit-test to guarantee that any improvements won't break the existent functionalities.</p>
+				<p>I'll try to maintain this project in my spare time (it is not my primary business), and I welcome anyone who wants to help (just <a href="#contactme">contact me</a> :)</p>
+			</div>
+			
+			<div id="contactme">
+				<h2>Contact me</h2>
+				<p>You're welcome to get in touch with me to collaborate to this project:</p>
+				<ul>
+					<li><a href="http://luca.lauretta.info">luca.lauretta.info</a> <em>please do not email me for support or bug reporting, use the <a href="#report">report section</a> instead.</em></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "jquery-ui-multidatespicker",
+  "description": "Extension to the jQuery UI Calendar allowing multiple selections",
+  "author": "Luca Lauretta <luca@lauretta.info>",
+  "license": "(MIT OR GPLv2)",
+  "version": "1.6.4",
+  "main": "jquery-ui.multidatespicker.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI.git"
+  },
+  "dependencies": {
+    "jquery": "1.9.1 - 3.2.x",
+    "jquery-ui": "1.7.0 - 1.12.x"
+  },
+  "keywords": [
+    "jquery",
+    "jquery-ui",
+    "calendar",
+    "dates"
+  ],
+  "bugs": {
+    "url": "https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/issues"
+  },
+  "homepage": "https://dubrox.github.io/Multiple-Dates-Picker-for-jQuery-UI"
+}

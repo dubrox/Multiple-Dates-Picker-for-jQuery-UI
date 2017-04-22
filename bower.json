@@ -1,0 +1,29 @@
+{
+  "name": "jquery-ui-multidatespicker",
+  "description": "Extension to the jQuery UI Calendar allowing multiple selections",
+  "license": "(MIT OR GPLv2)",
+  "authors": [
+    "Luca Lauretta <luca@lauretta.info>"
+  ],
+  "main": [
+    "jquery-ui.multidatespicker.js",
+    "jquery-ui.multidatespicker.css"
+  ],
+  "dependencies": {
+    "jquery": "1.9.1 - 3.2.x",
+    "jquery-ui": "1.7.0 - 1.12.x"
+  },
+  "keywords": [
+    "jquery",
+    "jquery-ui",
+    "calendar",
+    "dates"
+  ],
+  "ignore": [
+    "**/.*",
+    "*.ico",
+    "*.png",
+    "package.json",
+    "index.html"
+  ]
+}
