@@ -238,7 +238,7 @@
 					case 'object': break;
 					case 'string': date = $.datepicker.parseDate(dateFormat, date); break;
 					case 'number': date = new Date(date); break;
-					default: $.error('Conversion from "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
+					default: $.error('Conversion from "'+ from_format +'" format not allowed on jQuery.multiDatesPicker');
 				}
 				// then converts to the desired format
 				switch(desired_format) {
