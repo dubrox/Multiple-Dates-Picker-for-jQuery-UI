@@ -3,6 +3,10 @@ Find more infos on the [official MDP page](http://multidatespickr.sf.net).
 __CAUTION__: 1.6.x has changes to methods and options that are incompatible with previous versions of the same methods.
 
 # WHAT'S NEW
+## v1.6.5
+* Distribute as a npm package
+* Minor fixes.
+
 ## v1.6.4
 * Fix in maintaining custom dateFormat in toggleDate method.
 * Fixed respecting beforeShowDay custom classes.
