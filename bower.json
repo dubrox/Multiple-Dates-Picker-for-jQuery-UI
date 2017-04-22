@@ -1,0 +1,10 @@
+{
+    "name": "multi-dates-picker",
+    "version": "0.0.1",
+    "authors": ["Luca Lauretta"],
+    "description": "Being an extension to jQuery UI DatePicker you need to include both jQuery and jQuery UI (with datepicker module included!) javascript files to your HTML page, and right after that, include MultiDatesPicker.",    
+    "main": "jquery-ui.multidatespicker.js",
+    "license": "MIT",
+    "homepage": "http://multidatespickr.sourceforge.net/",
+    "ignore": []
+}
