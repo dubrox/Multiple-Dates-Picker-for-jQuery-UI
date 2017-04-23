@@ -284,7 +284,7 @@
 					case 'string':
 					case 'number':
 						var o_dates = new Array();
-						for(var i in this.multiDatesPicker.dates[type])
+						for(var i = 0; i < this.multiDatesPicker.dates[type].length; i++)
 							o_dates.push(
 								dateConvert.call(
 									this, 
@@ -325,7 +325,8 @@
 				if(!type) type = 'picked';
 				var removed = [];
 				if (Object.prototype.toString.call(dates) === '[object Array]') {
-					for(var i in dates.sort(function(a,b){return b-a})) {
+					dates.sort(function(a,b){return b-a});
+					for(var i = 0; i < dates.length; i++) {
 						removed.push(removeDate.call(this, dates[i], type));
 					}
 				} else {
@@ -337,7 +338,8 @@
 				if(!type) type = 'picked';
 				var removed = [];
 				if (Object.prototype.toString.call(indexes) === '[object Array]') {
-					for(var i in indexes.sort(function(a,b){return b-a})) {
+					indexes.sort(function(a,b){return b-a});
+					for(var i = 0; i < indexes.length; i++) {
 						removed.push(removeIndex.call(this, indexes[i], type));
 					}
 				} else {
