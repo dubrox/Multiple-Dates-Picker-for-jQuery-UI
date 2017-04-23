@@ -1,12 +1,19 @@
 /*
- * MultiDatesPicker v1.6.4
- * http://multidatespickr.sourceforge.net/
+ * MultiDatesPicker v1.6.5
+ * https://dubrox.github.io/Multiple-Dates-Picker-for-jQuery-UI
  * 
- * Copyright 2014, Luca Lauretta
+ * Copyright 2017, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
-(function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.6.4" } });
+
+(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["jquery", "jquery-ui-dist"], factory);
+  } else {
+    factory(jQuery);
+  }
+}(function( $ ){
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.5" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -371,7 +378,7 @@
 				
 				switch(this.multiDatesPicker.mode) {
 					case 'normal':
-						for(option in options)
+						for(var option in options)
 							switch(option) {
 								case 'maxPicks':
 								case 'minPicks':
@@ -495,4 +502,4 @@
 	// Workaround for #4055
 	// Add another global to avoid noConflict issues with inline event handlers
 	window['DP_jQuery_' + dpuuid] = $;
-})( jQuery );
+}));
