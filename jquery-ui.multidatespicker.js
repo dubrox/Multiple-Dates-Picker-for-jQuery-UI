@@ -1,5 +1,5 @@
 /*
- * MultiDatesPicker v1.6.5
+ * MultiDatesPicker v1.6.6
  * https://dubrox.github.io/Multiple-Dates-Picker-for-jQuery-UI
  * 
  * Copyright 2017, Luca Lauretta
@@ -13,7 +13,7 @@
     factory(jQuery);
   }
 }(function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.6.5" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.6" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -245,7 +245,7 @@
 					case 'object': break;
 					case 'string': date = $.datepicker.parseDate(dateFormat, date); break;
 					case 'number': date = new Date(date); break;
-					default: $.error('Conversion from "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
+					default: $.error('Conversion from "'+ from_format +'" format not allowed on jQuery.multiDatesPicker');
 				}
 				// then converts to the desired format
 				switch(desired_format) {
@@ -279,12 +279,12 @@
 				if(!format) format = 'string';
 				if(!type) type = 'picked';
 				switch (format) {
-					case 'object':
-						return this.multiDatesPicker.dates[type];
-					case 'string':
-					case 'number':
-						var o_dates = new Array();
-						for(var i in this.multiDatesPicker.dates[type])
+                    case 'object':
+                        return this.multiDatesPicker.dates[type];
+                    case 'string':
+                    case 'number':
+                        var o_dates = [];
+                        for(var i = 0; i < this.multiDatesPicker.dates[type].length; i++)
 							o_dates.push(
 								dateConvert.call(
 									this, 
@@ -325,7 +325,8 @@
 				if(!type) type = 'picked';
 				var removed = [];
 				if (Object.prototype.toString.call(dates) === '[object Array]') {
-					for(var i in dates.sort(function(a,b){return b-a})) {
+                    dates.sort(function(a,b){return b-a});
+                    for(var i = 0; i < dates.length; i++) {
 						removed.push(removeDate.call(this, dates[i], type));
 					}
 				} else {
@@ -337,7 +338,8 @@
 				if(!type) type = 'picked';
 				var removed = [];
 				if (Object.prototype.toString.call(indexes) === '[object Array]') {
-					for(var i in indexes.sort(function(a,b){return b-a})) {
+                    indexes.sort(function(a,b){return b-a});
+                    for(var i = 0; i < indexes.length; i++) {
 						removed.push(removeIndex.call(this, indexes[i], type));
 					}
 				} else {

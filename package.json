@@ -3,7 +3,7 @@
   "description": "Extension to the jQuery UI Calendar allowing multiple selections",
   "author": "Luca Lauretta <luca@lauretta.info>",
   "license": "(MIT OR GPLv2)",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "main": "jquery-ui.multidatespicker.js",
   "repository": {
     "type": "git",
