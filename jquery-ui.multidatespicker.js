@@ -71,7 +71,7 @@
 					beforeShow: function(input, inst) {
 						this.multiDatesPicker.changed = false;
 						if(this.multiDatesPicker.originalBeforeShow) 
-							this.multiDatesPicker.originalBeforeShow.call(this, input, inst);
+							return this.multiDatesPicker.originalBeforeShow.call(this, input, inst);
 					},
 					onSelect : function(dateText, inst) {
 						var $this = $(this);
