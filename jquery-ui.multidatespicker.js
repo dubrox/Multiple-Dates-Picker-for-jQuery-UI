@@ -71,7 +71,7 @@
 					beforeShow: function(input, inst) {
 						this.multiDatesPicker.changed = false;
 						if(this.multiDatesPicker.originalBeforeShow) 
-							this.multiDatesPicker.originalBeforeShow.call(this, input, inst);
+							return this.multiDatesPicker.originalBeforeShow.call(this, input, inst);
 					},
 					onSelect : function(dateText, inst) {
 						var $this = $(this);
@@ -138,7 +138,7 @@
 							bsdReturn = this.multiDatesPicker.originalBeforeShowDay.call(this, date);
 						
 						bsdReturn[1] = gotThisDate ? 'ui-state-highlight '+bsdReturn[1] : bsdReturn[1];
-						bsdReturn[0] = bsdReturn[0] && !(isDisabledCalendar || isDisabledDate || (areAllSelected && !bsdReturn[1]));
+						bsdReturn[0] = bsdReturn[0] && !(isDisabledCalendar || isDisabledDate || (areAllSelected && !gotThisDate));
 						return bsdReturn;
 					}
 				};
