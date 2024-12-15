@@ -1,6 +1,8 @@
 MultiDatesPicker for jQuery UI
 ==============================
 
+![codecov](https://codecov.io/gh/dubrox/Multiple-Dates-Picker-for-jQuery-UI/branch/main/graph/badge.svg)
+
 This plugin extends the jQuery UI datepicker clendar, allowing to select more than one date, 
 picking them one by one or by ranges relative to the clicked date.
 
