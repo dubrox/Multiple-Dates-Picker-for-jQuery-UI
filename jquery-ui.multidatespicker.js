@@ -1,5 +1,5 @@
 /*
- * MultiDatesPicker v1.6.6
+ * MultiDatesPicker v1.6.7
  * https://dubrox.github.io/Multiple-Dates-Picker-for-jQuery-UI
  * 
  * Copyright 2017, Luca Lauretta
@@ -13,7 +13,7 @@
     factory(jQuery);
   }
 }(function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.6.6" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.7" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -71,7 +71,7 @@
 					beforeShow: function(input, inst) {
 						this.multiDatesPicker.changed = false;
 						if(this.multiDatesPicker.originalBeforeShow) 
-							this.multiDatesPicker.originalBeforeShow.call(this, input, inst);
+							return this.multiDatesPicker.originalBeforeShow.call(this, input, inst);
 					},
 					onSelect : function(dateText, inst) {
 						var $this = $(this);
@@ -252,9 +252,8 @@
 					case 'object': return date;
 					case 'string': return $.datepicker.formatDate(dateFormat, date);
 					case 'number': return date.getTime();
-					default: $.error('Conversion to "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
+					default: return $.error('Conversion to "'+ desired_format +'" format not allowed on jQuery.multiDatesPicker');
 				}
-				return false;
 			},
 			gotDate : function( date, type ) {
 				if(!type) type = 'picked';
@@ -298,27 +297,18 @@
 				}
 			},
 			addDates : function( dates, type ) {
-				if(dates.length > 0) {
-					if(!type) type = 'picked';
-					switch(typeof dates) {
-						case 'object':
-						case 'array':
-							if(dates.length) {
-								for(var i = 0; i < dates.length; i++)
-									addDate.call(this, dates[i], type, true);
-								sortDates.call(this, type);
-								break;
-							} // else does the same as 'string'
-						case 'string':
-						case 'number':
-							addDate.call(this, dates, type);
-							break;
-						default: 
-							$.error('Date format "'+ typeof dates +'" not allowed on jQuery.multiDatesPicker');
-					}
-					//$(this).datepicker('refresh');
-				} else {
-					$.error('Empty array of dates received.');
+				if(!dates.length) return $.error('Empty array of dates received.');
+
+				if(!type) type = 'picked';
+				
+				switch(typeof dates) {
+					case 'object':
+					case 'array':
+						for(var i = 0; i < dates.length; i++)
+							addDate.call(this, dates[i], type, true);
+						return sortDates.call(this, type);
+					default:
+						return addDate.call(this, dates, type);
 				}
 			},
 			removeDates : function( dates, type ) {
@@ -359,9 +349,10 @@
 						this.multiDatesPicker.dates[type] = []; // deletes all picked/disabled dates
 						var end = this.multiDatesPicker.autoselectRange[1];
 						var begin = this.multiDatesPicker.autoselectRange[0];
-						if(end < begin) { // switch
-							end = this.multiDatesPicker.autoselectRange[0];
-							begin = this.multiDatesPicker.autoselectRange[1];
+						if(end < begin) { // swap
+							var tmp = end;
+							end = begin;
+							begin = tmp;
 						}
 						for(var i = begin; i < end; i++) 
 							methods.addDates.call(this, methods.sumDays.call(this,date, i), type);
@@ -468,10 +459,8 @@
 				return exec_result;
 			} else if( typeof method === 'object' || ! method ) {
 				return methods.init.apply(this, mdp_arguments);
-			} else {
-				$.error('Method ' +  method + ' does not exist on jQuery.multiDatesPicker');
 			}
-			return false;
+			return $.error('Method ' +  method + ' does not exist on jQuery.multiDatesPicker');
 		}); 
 		
 		return ret;
