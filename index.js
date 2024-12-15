@@ -4,14 +4,12 @@ var Path = require('path')
 /*
  * store original global keys
  */
-
 var blacklist = Object.keys(global)
 blacklist.push('constructor')
 
 /*
  * default config
  */
-
 var defaults = {
   url: 'http://localhost',
   globalize: true,
@@ -31,7 +29,6 @@ var defaults = {
  *       src: [ jquery ]
  *     })
  */
-
 module.exports = function (_options) {
   var options = extend(extend({}, defaults), _options)
 
@@ -77,7 +74,6 @@ module.exports = function (_options) {
   /*
    * undo keys from being propagated to global after the test suite
    */
-
   after(function () {
     if (options.globalize) {
       keys.forEach(function (key) {
@@ -91,7 +87,6 @@ module.exports = function (_options) {
   /*
    * propagate keys from `window` to `global`
    */
-
   function propagateToGlobal (window) {
     for (var key in window) {
       if (!window.hasOwnProperty(key)) continue
@@ -113,7 +108,6 @@ module.exports = function (_options) {
   /*
    * re-throws jsdom errors
    */
-
   function getError (errors) {
     var data = errors[0].data
     var err = data.error
@@ -150,7 +144,6 @@ module.exports.rerequire = rerequire
  *     var rerequire = require('mocha-jsdom').rerequire
  *     var $ = rerequire('jquery')
  */
-
 function rerequire (module) {
   if (module[0] === '.') {
     module = Path.join(Path.dirname(getCaller()), module)
@@ -173,7 +166,6 @@ function rerequire (module) {
  *
  * See: http://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function
  */
-
 function getCaller (offset) {
   /* eslint-disable handle-callback-err */
   if (typeof offset !== 'number') offset = 1

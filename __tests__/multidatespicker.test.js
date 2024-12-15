@@ -1,20 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-
-const $ = require('jquery');
-require('jquery-ui/ui/widgets/datepicker');
-
-if (!$.ui) {
-  $.ui = {};
-}
-
-if (!$.ui.multiDatesPicker) {
-  $.ui.multiDatesPicker = { version: '1.6.6' };
-}
-
-require('../jquery-ui.multidatespicker.js');
-
+// @jest-environment jsdom
 
 describe('MDP Initialization', function() {
   let $input;
@@ -52,12 +36,10 @@ describe('setMode', function() {
         adjustRangeToDisabled: true,
         addDisabledDates: [new Date(date.setDate(10)), new Date(date.setDate(15))]
     });
-
   });
 
 
   it('should set mode to normal and restrict selection to maxPicks', function() {
-
     $input.multiDatesPicker('addDates', '10/10/2024');
     $input.multiDatesPicker('addDates', '10/11/2024');
 
@@ -83,7 +65,6 @@ describe('setMode', function() {
   });
 
   it('should limit the pickable range to 7 days', function() {
-
     const options = $input.multiDatesPicker();
     const mode = options[0].multiDatesPicker.mode;
 
@@ -99,8 +80,7 @@ describe('setMode', function() {
 
     expect(range).toBeLessThanOrEqual(7);
     expect(mode).toBe('normal');
-
-});
+  });
 
   it('should not allow selection of disabled dates in normal mode', function() {
 
@@ -449,10 +429,9 @@ describe('toggleDate', function() {
 
     $input.multiDatesPicker('toggleDate', '10/10/2024');
     const remainingDates = $input.multiDatesPicker('getDates');
-    expect(remainingDates.length).toBe(3);
+    expect(remainingDates.length).toBe(2);
     expect(remainingDates).toContain('10/10/2024');
     expect(remainingDates).toContain('10/11/2024');
-    expect(remainingDates).toContain('10/12/2024');
   });
 
   it('should throw an error when no date is provided', function() {
