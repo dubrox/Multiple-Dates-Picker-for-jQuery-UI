@@ -1,5 +1,5 @@
 /*
- * MultiDatesPicker v1.6.7
+ * MultiDatesPicker v1.6.8
  * https://dubrox.github.io/Multiple-Dates-Picker-for-jQuery-UI
  * 
  * Copyright 2017, Luca Lauretta
@@ -13,7 +13,7 @@
     factory(jQuery);
   }
 }(function( $ ){
-	$.extend($.ui, { multiDatesPicker: { version: "1.6.7" } });
+	$.extend($.ui, { multiDatesPicker: { version: "1.6.8" } });
 	
 	$.fn.multiDatesPicker = function(method) {
 		var mdp_arguments = arguments;
@@ -478,7 +478,12 @@
 	
 	// allows MDP not to hide everytime a date is picked
 	$.multiDatesPicker._hideDatepicker = $.datepicker._hideDatepicker;
-	$.datepicker._hideDatepicker = function(){
+	$.datepicker._hideDatepicker = function( input ) {
+		const inst = this._curInst;
+		if ( !inst || ( input && inst !== $.data( input, "datepicker" ) ) ) {
+			return;
+		}
+
 		var target = this._curInst.input[0];
 		var mdp = target.multiDatesPicker;
 		if(!mdp || (this._curInst.inline === false && !mdp.changed)) {
