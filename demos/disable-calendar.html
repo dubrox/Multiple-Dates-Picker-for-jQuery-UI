@@ -1,0 +1,12 @@
+<div id="mdp-demo"></div>
+<script>
+  var today = new Date();
+  var tomorrow = new Date().setDate(today.getDate() + 1);
+
+  $("#mdp-demo").multiDatesPicker({
+    disabled: true,
+    // today and tomorrow are selected just to show how selected dates look
+    // in a disabled calendar
+    addDates: [today, tomorrow],
+  });
+</script>

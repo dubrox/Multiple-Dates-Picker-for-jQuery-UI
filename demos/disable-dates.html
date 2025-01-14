@@ -1,0 +1,8 @@
+<div id="mdp-demo"></div>
+<script>
+  var date = new Date();
+  $("#mdp-demo").multiDatesPicker({
+    // disable the 1st and 3rd of the current month
+    addDisabledDates: [date.setDate(1), date.setDate(3)],
+  });
+</script>

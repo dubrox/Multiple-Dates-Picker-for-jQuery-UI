@@ -1,0 +1,12 @@
+<div id="mdp-demo"></div>
+<script>
+  $("#mdp-demo").multiDatesPicker({
+    beforeShowDay: $.datepicker.noWeekends,
+  });
+  /*
+  Note: disabling dates using 'beforeShowDay' 
+  may produce undesired results with MDP functionalities 
+  that involve ranges, because MDP will still consider 
+  those dates as available.
+  */
+</script>

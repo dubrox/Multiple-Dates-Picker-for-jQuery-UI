@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <title>MDP demo page</title>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.2/themes/pepper-grinder/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="../jquery-ui.multidatespicker.css" />
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js"></script>
+    <script src="../jquery-ui.multidatespicker.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      #code {
+        font-size: x-small;
+        white-space: pre;
+        background: black;
+        color: #eee;
+        padding: 0.5em;
+      }
+    </style>
+    <script>
+      const loadDemo = (name) => {
+        $.get(
+          `${name}.html`,
+          function (demoCode) {
+            $("#code").text(demoCode);
+            $("#preview").html(demoCode);
+          },
+          "html",
+        );
+      };
+
+      const loadDemoFromQuery = () => {
+        const defaultDemo = "simple";
+        const params = new URLSearchParams(window.location.search);
+        const demoName = params.get("demo") || defaultDemo;
+        loadDemo(demoName);
+      };
+
+      const toggleCodeVisibility = (e) => {
+        e.preventDefault();
+        const codeElement = document.getElementById("code");
+        const previewElement = document.getElementById("preview");
+        const wasVisible = codeElement.style.display === "block";
+        codeElement.style.display = wasVisible ? "none" : "block";
+        window.scrollTo(0, wasVisible ? 0 : 400);
+      };
+
+      $(function () {
+        loadDemoFromQuery();
+        $("#toggle-code-visibility").click(toggleCodeVisibility);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="preview"></div>
+    <a id="toggle-code-visibility" href="#">Code used</a>
+    <code id="code" style="display: none"></code>
+  </body>
+</html>

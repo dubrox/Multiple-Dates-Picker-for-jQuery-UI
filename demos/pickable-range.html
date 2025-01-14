@@ -1,0 +1,9 @@
+<div id="mdp-demo"></div>
+<script>
+  var date = new Date();
+  $("#mdp-demo").multiDatesPicker({
+    pickableRange: 7,
+    adjustRangeToDisabled: true,
+    addDisabledDates: [date.setDate(10), date.setDate(15)],
+  });
+</script>
