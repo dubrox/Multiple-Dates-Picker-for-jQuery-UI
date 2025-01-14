@@ -30,12 +30,26 @@
   },
   "homepage": "https://dubrox.github.io/Multiple-Dates-Picker-for-jQuery-UI",
   "scripts": {
-    "test": "jest"
+    "format": "prettier --write --ignore-unknown",
+    "lint": "eslint --cache --fix",
+    "test": "jest",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.js": "npm run lint",
+    "*.*": "npm run format"
   },
   "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
     "esm": "^3.2.25",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "jsom": "^1.0.0"
+    "jsom": "^1.0.0",
+    "lint-staged": "^15.3.0",
+    "prettier": "3.4.2"
   }
 }

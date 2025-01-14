@@ -9,10 +9,10 @@ describe("MDP Initialization", function () {
     document.body.innerHTML = '<input id="datepicker" />';
     $input = $("#datepicker");
 
-    spyDatepickerUpdate = jest.spyOn($.datepicker, '_updateDatepicker');
+    spyDatepickerUpdate = jest.spyOn($.datepicker, "_updateDatepicker");
 
     // fix the offsetWidth to make the datepicker visible in jsdom
-    jest.spyOn($input[0], 'offsetWidth', 'get').mockReturnValue(1);
+    jest.spyOn($input[0], "offsetWidth", "get").mockReturnValue(1);
   });
 
   afterEach(function () {
@@ -26,26 +26,26 @@ describe("MDP Initialization", function () {
 
   it("should call a beforeShow event with default behavior", function () {
     $input.multiDatesPicker();
-    
+
     // triggers the beforeShow event
-    $input.trigger('focus');
+    $input.trigger("focus");
 
     expect(spyDatepickerUpdate).toHaveBeenCalledTimes(normalDatepickerUpdates);
   });
 
   it("should call a custom beforeShow event that interrupts the default behavior", function () {
-    const beforeShow = jest.fn(_ => false); // returning false to interrupt the default behavior
+    const beforeShow = jest.fn((_) => false); // returning false to interrupt the default behavior
     $input.multiDatesPicker({ beforeShow });
 
     // triggers the beforeShow event with a custom function
-    $input.trigger('focus');
+    $input.trigger("focus");
 
     expect(beforeShow).toHaveBeenCalled();
-    expect(spyDatepickerUpdate).toHaveBeenCalledTimes(normalDatepickerUpdates - 1);
+    expect(spyDatepickerUpdate).toHaveBeenCalledTimes(
+      normalDatepickerUpdates - 1,
+    );
   });
 });
-
-
 
 describe("setMode", function () {
   let $input, date;
@@ -190,7 +190,7 @@ describe("init", function () {
 
   it("should correctly set disabled dates and update calendar range", function () {
     const $input = $('<input type="text" id="test-datepicker">').appendTo(
-      "body"
+      "body",
     );
 
     // Initialize with options that set minDate and maxDate
@@ -239,7 +239,9 @@ describe("invalid methods", function () {
   it("should error on non-existing method", function () {
     expect(function () {
       $input.multiDatesPicker("happyNewYear");
-    }).toThrowError("Method happyNewYear does not exist on jQuery.multiDatesPicker");
+    }).toThrowError(
+      "Method happyNewYear does not exist on jQuery.multiDatesPicker",
+    );
   });
 });
 
@@ -562,7 +564,7 @@ describe("gotDate", function () {
     $input.multiDatesPicker(
       "addDates",
       ["10/11/2024", "10/13/2024"],
-      "disabled"
+      "disabled",
     );
   });
 
@@ -668,7 +670,7 @@ describe("getDates", function () {
     $input.multiDatesPicker(
       "addDates",
       ["10/11/2024", "10/13/2024"],
-      "disabled"
+      "disabled",
     );
   });
 
@@ -681,7 +683,7 @@ describe("getDates", function () {
     const disabledDates = $input.multiDatesPicker(
       "getDates",
       "string",
-      "disabled"
+      "disabled",
     );
     expect(disabledDates).toEqual(["10/11/2024", "10/13/2024"]);
   });
@@ -699,7 +701,7 @@ describe("getDates", function () {
     const disabledDates = $input.multiDatesPicker(
       "getDates",
       "object",
-      "disabled"
+      "disabled",
     );
     expect(disabledDates).toEqual([
       new Date("10/11/2024"),
@@ -720,7 +722,7 @@ describe("getDates", function () {
     const disabledDates = $input.multiDatesPicker(
       "getDates",
       "number",
-      "disabled"
+      "disabled",
     );
     expect(disabledDates).toEqual([
       Date.parse("10/11/2024"),
