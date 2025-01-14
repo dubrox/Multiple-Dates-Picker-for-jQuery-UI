@@ -1,8 +1,8 @@
 /*
- * MultiDatesPicker v1.6.8
+ * MultiDatesPicker for jQuery UI
  * https://dubrox.github.io/Multiple-Dates-Picker-for-jQuery-UI
  *
- * Copyright 2017, Luca Lauretta
+ * Copyright 2025, Luca Lauretta
  * Dual licensed under the MIT or GPL version 2 licenses.
  */
 
@@ -13,7 +13,7 @@
     factory(jQuery);
   }
 })(function ($) {
-  $.extend($.ui, { multiDatesPicker: { version: "1.6.8" } });
+  $.extend($.ui, { multiDatesPicker: { version: "1.6.9" } });
 
   $.fn.multiDatesPicker = function (method) {
     var mdp_arguments = arguments;
@@ -228,11 +228,12 @@
         var inputs_values = $this.multiDatesPicker("value");
 
         // fills the input field back with all the dates in the calendar
-        $this.val(inputs_values);
+        $this.val(inputs_values).trigger("change");
 
         // Fixes the altField filled with defaultDate by default
         var altFieldOption = $this.datepicker("option", "altField");
-        if (altFieldOption) $(altFieldOption).val(inputs_values);
+        if (altFieldOption)
+          $(altFieldOption).val(inputs_values).trigger("change");
 
         // Updates the calendar view
         $this.datepicker("refresh");
@@ -530,9 +531,9 @@
             // @todo: should use altFormat for altField
             var dates_string = methods.value.call(this);
             if (altField !== undefined && altField != "") {
-              $(altField).val(dates_string);
+              $(altField).val(dates_string).trigger("change");
             }
-            $this.val(dates_string);
+            $this.val(dates_string).trigger("change");
 
             $.datepicker._refreshDatepicker(this);
         }
